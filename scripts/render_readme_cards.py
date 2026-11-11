@@ -61,7 +61,11 @@ CSS = """
 def svg(w, h, body, title, desc="", f=("sans", "mono")):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="t d">'
             f'<title id="t">{esc(title)}</title><desc id="d">{esc(desc or title)}</desc><style>{fonts(f)}{CSS}</style>{body}</svg>')
-GAP = {"hero": 18, "graph": 18, "activity": 18, "tile": 18, "repo": 18, "stack": 22}  # space below cards so they don't touch
+GAP = {"hero": 16, "graph": 16, "activity": 16, "tile": 16, "repo": 16, "stack": 16}
+# 3-up rows: each image is 300 wide (1/3 of 900); the 284-wide card is shifted so the
+# outer edges align with full-width cards and both inner gaps are 16.
+COL_W, CARD_W = 300, 284
+def third(i, body): return f'<g transform="translate({i * (COL_W - CARD_W) // 2} 0)">{body}</g>'  # space below cards so they don't touch
 def save(name, s):
     g = GAP.get(name.rstrip("0123456789"), 0)
     if g:
@@ -148,7 +152,7 @@ def activity(t0=3.0):
 
 # ---------- TILES ----------
 def tiles(t0=4.2):
-    W, H = 290, 200
+    W, H = CARD_W, 200
     for i, t in enumerate(cfg["tiles"]):
         bgc, fg = t["bg"], t["fg"]; d0 = t0 + i * .22
         if "value" in t:
@@ -161,18 +165,18 @@ def tiles(t0=4.2):
                f'<text x="26" y="118" font-size="{t.get("size", 56)}" class="serif" fill="{fg}">{shown}</text>' \
                f'<text x="26" y="146" font-size="22" class="serifi" fill="{fg}" fill-opacity=".95">{esc(t["unit"])}</text>' \
                f'<text x="26" y="176" font-size="13" class="sans" fill="{fg}" fill-opacity=".8">{esc(t["text"])}</text></g>'
-        save(f"tile{i+1}", svg(W, H, body, f'{t["label"]}: {val} {t["unit"]}', t["text"], ("serif", "serifi", "sans", "monob")))
+        save(f"tile{i+1}", svg(COL_W, H, third(i, body), f'{t["label"]}: {val} {t["unit"]}', t["text"], ("serif", "serifi", "sans", "monob")))
 
 # ---------- REPOS ----------
 def repos(t0=5.4):
     for i, r in enumerate(prof["featured"][:3]):
-        W, H = 290, 168; d0 = t0 + i * .2; col = r.get("color") or VIOLET
+        W, H = CARD_W, 168; d0 = t0 + i * .2; col = r.get("color") or VIOLET
         desc = "".join(f'<text x="26" y="{82 + j*19}" font-size="13" class="sans" fill="{MUTE}">{esc(l)}</text>' for j, l in enumerate(wrap(r["description"], 36, 3)))
         lang = r["language"]
         foot = f'<circle cx="31" cy="140" r="5" fill="{col}"/><text x="44" y="144" font-size="12" class="mono" fill="{MUTE}">{esc(lang)}</text>' if lang else ""
         body = card(W, H, WHITE) + f'<g class="rise" style="{D(d0)}">' \
             f'<text x="26" y="50" font-size="17" class="sansb" fill="{INK}">{esc(r["name"][:24])}</text>{ARROW(W-40, 36, 11, VIOLET)}{desc}{foot}</g>'
-        save(f"repo{i+1}", svg(W, H, body, r["name"], f'{r["name"]}: {r["description"]}', ("sans", "sansb", "mono")))
+        save(f"repo{i+1}", svg(COL_W, H, third(i, body), r["name"], f'{r["name"]}: {r["description"]}', ("sans", "sansb", "mono")))
 
 # ---------- FOCUS ----------
 def pills(items, y, t0, col, tint):
@@ -208,8 +212,8 @@ def readme():
     L.append(a(f"https://github.com/{u}", "hero", f'{cfg["name"]}. {cfg["tagline"]} {cfg["role"]}.', 'width="100%"'))
     L.append('<img src="./cards/graph.svg" alt="Contribution graph for the last year" width="100%">')
     L.append('<img src="./cards/activity.svg" alt="Contributions per month, with current and longest streak" width="100%">')
-    for i, t in enumerate(cfg["tiles"]): L.append(a(t["url"], f"tile{i+1}", f'{t["label"]}: {t.get("value", "")} {t["unit"]}. {t["text"]}', 'width="32.5%"'))
-    for i, r in enumerate(prof["featured"][:3]): L.append(a(r["url"], f"repo{i+1}", f'Repository {r["name"]}: {r["description"]}', 'width="32.5%"'))
+    L.append("".join(a(t["url"], f"tile{i+1}", f'{t["label"]}: {t.get("value", "")} {t["unit"]}. {t["text"]}', 'width="33.33%"') for i, t in enumerate(cfg["tiles"])))
+    L.append("".join(a(r["url"], f"repo{i+1}", f'Repository {r["name"]}: {r["description"]}', 'width="33.33%"') for i, r in enumerate(prof["featured"][:3])))
     L.append('<img src="./cards/stack.svg" alt="Focus areas" width="100%">')
     L.append("\n" + "\n".join(a(l["url"], f"chip{i+1}", l["label"], 'height="40"') for i, l in enumerate(cfg["links"])) + "\n")
     L.append('<img src="./cards/footer.svg" alt="Cards refreshed daily by a GitHub Action" width="100%">\n\n</div>\n')
