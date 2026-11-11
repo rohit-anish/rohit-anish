@@ -55,11 +55,11 @@
     },
     {
       "label": "SHIPPED",
-      "value": "MedPredict",
-      "size": 40,
-      "unit": "live",
-      "text": "AI vitals app · try the demo",
-      "url": "https://medpredict-iota.vercel.app",
+      "value": "OnboardAI",
+      "size": 44,
+      "unit": "on PyPI",
+      "text": "Try it: pip install onboardai",
+      "url": "https://pypi.org/project/onboardai/",
       "bg": "#f26a1b",
       "fg": "#14141a"
     }

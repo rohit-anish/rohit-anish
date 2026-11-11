@@ -26,7 +26,7 @@ B.Tech CSE (Core) student building AI-powered software and hardware. I care not 
 
 ### Projects
 
-**01. [OnboardAI](https://github.com/rohit-anish/onboardAI)**: AI-powered developer onboarding for unfamiliar codebases. Connects with Claude Code and MCP-compatible clients and turns a raw repository into architecture analysis, day-by-day learning roadmaps, dependency graphs, graph-based visualization and contextual Q&A.
+**01. [OnboardAI](https://github.com/rohit-anish/onboardAI)** (on [PyPI](https://pypi.org/project/onboardai/): `pip install onboardai`): AI-powered developer onboarding for unfamiliar codebases. Connects with Claude Code and MCP-compatible clients and turns a raw repository into architecture analysis, day-by-day learning roadmaps, dependency graphs, graph-based visualization and contextual Q&A.
 *Python, FastMCP, NetworkX, Graphify, MCP*
 
 **02. [Pragati](https://github.com/rohit-anish/Pragati)**: AI textbook tutor for Tamil and Tanglish learners. Students upload textbook content and get explanations grounded in it, with teach-back learning, misconception detection and adaptive practice questions.

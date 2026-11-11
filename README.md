@@ -1,17 +1,17 @@
 <div align="center">
 
-<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=7ef9cd04" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
-<img src="./cards/graph.svg?v=325cc785" alt="Contribution graph for the last year" width="100%">
-<img src="./cards/activity.svg?v=4e093a78" alt="Contributions per month, with current and longest streak" width="100%">
-<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=97c57fd9" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/tile2.svg?v=5d5accf8" alt="RESEARCH: 9.78% WER. ASR across English accents" width="33.33%"></a><a href="https://medpredict-iota.vercel.app"><img src="./cards/tile3.svg?v=74f295ef" alt="SHIPPED: MedPredict live. AI vitals app · try the demo" width="33.33%"></a>
-<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=49c7dbbb" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=5521b4fd" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
-<a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/project3.svg?v=d4284f2f" alt="ASR-Perfector: Research on making speech recognition robust across English accents, noise and speaking styles." width="50%"></a><a href="https://github.com/rohit-anish/medpredict"><img src="./cards/project4.svg?v=202d7b90" alt="MedPredict: Predicts health risks from vitals like heart rate, SpO2, blood pressure and ECG." width="50%"></a>
-<img src="./cards/stack.svg?v=f7d7ab55" alt="Focus, stack and what I am learning" width="100%">
+<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=3f85534d" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
+<img src="./cards/graph.svg?v=02fc3da6" alt="Contribution graph for the last year" width="100%">
+<img src="./cards/activity.svg?v=731bf989" alt="Contributions per month, with current and longest streak" width="100%">
+<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=2e8912d1" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/tile2.svg?v=66fff14c" alt="RESEARCH: 9.78% WER. ASR across English accents" width="33.33%"></a><a href="https://pypi.org/project/onboardai/"><img src="./cards/tile3.svg?v=b35ee6a2" alt="SHIPPED: OnboardAI on PyPI. Try it: pip install onboardai" width="33.33%"></a>
+<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=42450f0d" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=c2fe6578" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
+<a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/project3.svg?v=db9f239f" alt="ASR-Perfector: Research on making speech recognition robust across English accents, noise and speaking styles." width="50%"></a><a href="https://github.com/rohit-anish/medpredict"><img src="./cards/project4.svg?v=b648f812" alt="MedPredict: Predicts health risks from vitals like heart rate, SpO2, blood pressure and ECG." width="50%"></a>
+<img src="./cards/stack.svg?v=93ce6ddc" alt="Focus, stack and what I am learning" width="100%">
 
-<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=8bcf1c4b" alt="LinkedIn" height="40"></a>
-<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=2b3ccadd" alt="Email" height="40"></a>
+<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=08e2c208" alt="LinkedIn" height="40"></a>
+<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=1f9ff986" alt="Email" height="40"></a>
 
-<img src="./cards/footer.svg?v=0da000ae" alt="Cards refreshed daily by a GitHub Action" width="100%">
+<img src="./cards/footer.svg?v=1586d5ad" alt="Cards refreshed daily by a GitHub Action" width="100%">
 
 </div>
 
@@ -46,7 +46,7 @@ B.Tech CSE (Core) student building AI-powered software and hardware. I care not 
 
 ### Projects
 
-**01. [OnboardAI](https://github.com/rohit-anish/onboardAI)**: AI-powered developer onboarding for unfamiliar codebases. Connects with Claude Code and MCP-compatible clients and turns a raw repository into architecture analysis, day-by-day learning roadmaps, dependency graphs, graph-based visualization and contextual Q&A.
+**01. [OnboardAI](https://github.com/rohit-anish/onboardAI)** (on [PyPI](https://pypi.org/project/onboardai/): `pip install onboardai`): AI-powered developer onboarding for unfamiliar codebases. Connects with Claude Code and MCP-compatible clients and turns a raw repository into architecture analysis, day-by-day learning roadmaps, dependency graphs, graph-based visualization and contextual Q&A.
 *Python, FastMCP, NetworkX, Graphify, MCP*
 
 **02. [Pragati](https://github.com/rohit-anish/Pragati)**: AI textbook tutor for Tamil and Tanglish learners. Students upload textbook content and get explanations grounded in it, with teach-back learning, misconception detection and adaptive practice questions.
