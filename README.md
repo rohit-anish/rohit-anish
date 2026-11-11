@@ -37,7 +37,7 @@ B.Tech CSE (Core) student building AI-powered software and hardware. I care not 
 ### Tech stack
 
 - **Languages:** C++, Python, JavaScript, TypeScript
-- **AI / ML:** Scikit-learn, Random Forest, model training, dataset handling, video analysis
+- **AI / ML:** Scikit-learn, Random Forest, model training, dataset handling, speech recognition (Whisper)
 - **Backend & web:** FastAPI, REST APIs, React, Vite, HTML, CSS
 - **Databases & cloud:** PostgreSQL, database design, Vercel, deployment, CI/CD
 - **Tools:** Git, GitHub, GitHub Actions, VS Code
