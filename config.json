@@ -101,22 +101,25 @@
       ]
     },
     {
-      "name": "AI Video Authenticity Detector",
-      "text": "Flags deepfakes and edited video from frame, lighting and compression cues.",
+      "name": "ASR-Perfector",
+      "url": "https://github.com/rohit-anish/ASR-Perfector",
+      "text": "Research on making speech recognition robust across English accents, noise and speaking styles.",
       "tags": [
         "Python",
-        "Scikit-learn",
-        "Random Forest"
+        "Whisper",
+        "Hugging Face",
+        "WER"
       ]
     },
     {
-      "name": "IoT Smart Energy Monitor",
-      "text": "ESP32 meter for voltage, current, power and kWh, shown locally and on the cloud.",
+      "name": "MedPredict",
+      "url": "https://github.com/rohit-anish/medpredict",
+      "text": "Predicts health risks from vitals like heart rate, SpO2, blood pressure and ECG.",
       "tags": [
-        "ESP32",
-        "ACS712",
-        "ZMPT101B",
-        "Blynk"
+        "React",
+        "FastAPI",
+        "Scikit-learn",
+        "Random Forest"
       ]
     }
   ]

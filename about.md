@@ -32,8 +32,8 @@ B.Tech CSE (Core) student building AI-powered software and hardware. I care not 
 **02. [Pragati](https://github.com/rohit-anish/Pragati)**: AI textbook tutor for Tamil and Tanglish learners. Students upload textbook content and get explanations grounded in it, with teach-back learning, misconception detection and adaptive practice questions.
 *FastAPI, React, Vite, NVIDIA NIM, Sarvam AI*
 
-**03. AI Video Authenticity Detector**: a long-term project detecting manipulated and AI-generated video with pretrained and fine-tuned models, using compression artifacts, frame-level and lighting inconsistencies and video-level features. My video-editing background helps in understanding how real-world manipulation happens.
-*Python, Scikit-learn, Random Forest, video analysis*
+**03. [ASR-Perfector](https://github.com/rohit-anish/ASR-Perfector)**: research on making automatic speech recognition robust across English accents, speakers, speaking speed, pitch, background noise and recording conditions. Baselines compare multilingual and English-only Whisper on an English accent dataset, scored by accent-wise word error rate (best so far: 9.78% normalized WER). Next: WavLM, uncertainty-aware ASR and adaptation to unseen accents.
+*Python, Whisper, Hugging Face Datasets, WER evaluation*
 
-**04. IoT Smart Energy Monitor**: ESP32-based real-time energy monitor with ACS712 current and ZMPT101B voltage sensors, a 16×2 I2C LCD and Blynk IoT over Wi-Fi. Calculates voltage → current → power → energy (kWh), locally and remotely.
-*ESP32, Arduino IDE, Blynk*
+**04. [MedPredict](https://github.com/rohit-anish/medpredict)** ([live demo](https://medpredict-iota.vercel.app)): AI-based vital analysis that takes heart rate, respiratory rate, temperature, SpO₂, blood pressure and ECG data and predicts potential health risks with a trained ML model, served through a FastAPI backend to a React dashboard.
+*React, FastAPI, Scikit-learn, Random Forest*

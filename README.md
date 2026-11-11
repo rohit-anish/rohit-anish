@@ -1,17 +1,17 @@
 <div align="center">
 
-<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=7ef9cd04" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
-<img src="./cards/graph.svg?v=4b8d9d8a" alt="Contribution graph for the last year" width="100%">
-<img src="./cards/activity.svg?v=edbedd3a" alt="Contributions per month, with current and longest streak" width="100%">
-<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=97c57fd9" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg?v=774d0339" alt="STARS:  stars. Across public repos" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg?v=61463cda" alt="COMMUNITY:  followers. On GitHub" width="33.33%"></a>
-<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=49c7dbbb" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=5521b4fd" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
-<a href="https://github.com/rohit-anish"><img src="./cards/project3.svg?v=0aeadf38" alt="AI Video Authenticity Detector: Flags deepfakes and edited video from frame, lighting and compression cues." width="50%"></a><a href="https://github.com/rohit-anish"><img src="./cards/project4.svg?v=6e013696" alt="IoT Smart Energy Monitor: ESP32 meter for voltage, current, power and kWh, shown locally and on the cloud." width="50%"></a>
-<img src="./cards/stack.svg?v=f7d7ab55" alt="Focus, stack and what I am learning" width="100%">
+<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=3f85534d" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
+<img src="./cards/graph.svg?v=634f4e49" alt="Contribution graph for the last year" width="100%">
+<img src="./cards/activity.svg?v=54be10c1" alt="Contributions per month, with current and longest streak" width="100%">
+<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=2e8912d1" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg?v=ed2c0cd3" alt="STARS:  stars. Across public repos" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg?v=6071d5ea" alt="COMMUNITY:  followers. On GitHub" width="33.33%"></a>
+<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=42450f0d" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=c2fe6578" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
+<a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/project3.svg?v=db9f239f" alt="ASR-Perfector: Research on making speech recognition robust across English accents, noise and speaking styles." width="50%"></a><a href="https://github.com/rohit-anish/medpredict"><img src="./cards/project4.svg?v=b648f812" alt="MedPredict: Predicts health risks from vitals like heart rate, SpO2, blood pressure and ECG." width="50%"></a>
+<img src="./cards/stack.svg?v=93ce6ddc" alt="Focus, stack and what I am learning" width="100%">
 
-<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=8bcf1c4b" alt="LinkedIn" height="40"></a>
-<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=2b3ccadd" alt="Email" height="40"></a>
+<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=08e2c208" alt="LinkedIn" height="40"></a>
+<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=1f9ff986" alt="Email" height="40"></a>
 
-<img src="./cards/footer.svg?v=0da000ae" alt="Cards refreshed daily by a GitHub Action" width="100%">
+<img src="./cards/footer.svg?v=d8c8c94c" alt="Cards refreshed daily by a GitHub Action" width="100%">
 
 </div>
 
@@ -52,10 +52,10 @@ B.Tech CSE (Core) student building AI-powered software and hardware. I care not 
 **02. [Pragati](https://github.com/rohit-anish/Pragati)**: AI textbook tutor for Tamil and Tanglish learners. Students upload textbook content and get explanations grounded in it, with teach-back learning, misconception detection and adaptive practice questions.
 *FastAPI, React, Vite, NVIDIA NIM, Sarvam AI*
 
-**03. AI Video Authenticity Detector**: a long-term project detecting manipulated and AI-generated video with pretrained and fine-tuned models, using compression artifacts, frame-level and lighting inconsistencies and video-level features. My video-editing background helps in understanding how real-world manipulation happens.
-*Python, Scikit-learn, Random Forest, video analysis*
+**03. [ASR-Perfector](https://github.com/rohit-anish/ASR-Perfector)**: research on making automatic speech recognition robust across English accents, speakers, speaking speed, pitch, background noise and recording conditions. Baselines compare multilingual and English-only Whisper on an English accent dataset, scored by accent-wise word error rate (best so far: 9.78% normalized WER). Next: WavLM, uncertainty-aware ASR and adaptation to unseen accents.
+*Python, Whisper, Hugging Face Datasets, WER evaluation*
 
-**04. IoT Smart Energy Monitor**: ESP32-based real-time energy monitor with ACS712 current and ZMPT101B voltage sensors, a 16×2 I2C LCD and Blynk IoT over Wi-Fi. Calculates voltage → current → power → energy (kWh), locally and remotely.
-*ESP32, Arduino IDE, Blynk*
+**04. [MedPredict](https://github.com/rohit-anish/medpredict)** ([live demo](https://medpredict-iota.vercel.app)): AI-based vital analysis that takes heart rate, respiratory rate, temperature, SpO₂, blood pressure and ECG data and predicts potential health risks with a trained ML model, served through a FastAPI backend to a React dashboard.
+*React, FastAPI, Scikit-learn, Random Forest*
 
 </details>
