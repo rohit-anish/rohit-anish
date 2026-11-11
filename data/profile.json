@@ -1,0 +1,35 @@
+{
+ "sample": true,
+ "followers": 42,
+ "repos": 18,
+ "stars": 130,
+ "featured": [
+  {
+   "name": "onboardAI",
+   "description": "AI-powered developer onboarding for unfamiliar codebases (sample text, replaced by live data).",
+   "stars": 64,
+   "forks": 9,
+   "url": "https://github.com/rohit-anish/onboardAI",
+   "language": "TypeScript",
+   "color": "#3178c6"
+  },
+  {
+   "name": "Pragati",
+   "description": "AI textbook tutor for Tamil and Tanglish learners (sample text, replaced by live data).",
+   "stars": 41,
+   "forks": 5,
+   "url": "https://github.com/rohit-anish/Pragati",
+   "language": "TypeScript",
+   "color": "#3572A5"
+  },
+  {
+   "name": "your-third-repo",
+   "description": "Pin a third repo on GitHub and it appears here.",
+   "stars": 25,
+   "forks": 2,
+   "url": "https://github.com/rohit-anish",
+   "language": "Go",
+   "color": "#00ADD8"
+  }
+ ]
+}

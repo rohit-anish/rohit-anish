@@ -1,0 +1,68 @@
+{
+  "username": "rohit-anish",
+  "name": "Rohit Anish P",
+  "tagline": "Building AI-powered software and hardware.",
+  "role": "B.Tech CSE · AI/ML, backend & IoT",
+  "links": [
+    {
+      "label": "LinkedIn",
+      "url": "https://www.linkedin.com/in/rohitanishp/"
+    },
+    {
+      "label": "Email",
+      "url": "mailto:rohitanishp@gmail.com"
+    },
+    {
+      "label": "GitHub",
+      "url": "https://github.com/rohit-anish"
+    }
+  ],
+  "featured_repos": [
+    "onboardAI",
+    "Pragati"
+  ],
+  "focus": [
+    "AI/ML",
+    "Backend",
+    "IoT & Embedded",
+    "Cloud",
+    "Cybersecurity"
+  ],
+  "learning": [
+    "PostgreSQL",
+    "TypeScript",
+    "Backend Architecture",
+    "Cloud Computing",
+    "Cybersecurity"
+  ],
+  "tiles": [
+    {
+      "label": "BUILD",
+      "metric": "repos",
+      "unit": "repos",
+      "text": "AI products, FastAPI backends and ESP32 systems.",
+      "url": "https://github.com/rohit-anish?tab=repositories",
+      "bg": "#5b2cf0",
+      "fg": "#ffffff"
+    },
+    {
+      "label": "STARS",
+      "metric": "stars",
+      "unit": "stars",
+      "text": "Earned across everything I ship in public.",
+      "url": "https://github.com/rohit-anish?tab=stars",
+      "bg": "#f0443a",
+      "fg": "#ffffff"
+    },
+    {
+      "label": "COMMUNITY",
+      "metric": "followers",
+      "unit": "followers",
+      "text": "Developers following the build, one commit at a time.",
+      "url": "https://github.com/rohit-anish?tab=followers",
+      "bg": "#ffc61a",
+      "fg": "#14141a"
+    }
+  ],
+  "link_text": "github.com/rohit-anish"
+}
