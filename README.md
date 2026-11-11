@@ -1,17 +1,17 @@
 <div align="center">
 
-<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=7ef9cd04" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
-<img src="./cards/graph.svg?v=57b23dd6" alt="Contribution graph for the last year" width="100%">
-<img src="./cards/activity.svg?v=a300da22" alt="Contributions per month, with current and longest streak" width="100%">
-<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=97c57fd9" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg?v=774d0339" alt="STARS:  stars. Across public repos" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg?v=61463cda" alt="COMMUNITY:  followers. On GitHub" width="33.33%"></a>
-<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=49c7dbbb" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=5521b4fd" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
-<a href="https://github.com/rohit-anish"><img src="./cards/project3.svg?v=0aeadf38" alt="AI Video Authenticity Detector: Flags deepfakes and edited video from frame, lighting and compression cues." width="50%"></a><a href="https://github.com/rohit-anish"><img src="./cards/project4.svg?v=6e013696" alt="IoT Smart Energy Monitor: ESP32 meter for voltage, current, power and kWh, shown locally and on the cloud." width="50%"></a>
-<img src="./cards/stack.svg?v=2c4160f4" alt="Focus, stack and what I am learning" width="100%">
+<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=3f85534d" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
+<img src="./cards/graph.svg?v=217e2b6b" alt="Contribution graph for the last year" width="100%">
+<img src="./cards/activity.svg?v=e6a71e5f" alt="Contributions per month, with current and longest streak" width="100%">
+<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=2e8912d1" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg?v=ed2c0cd3" alt="STARS:  stars. Across public repos" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg?v=6071d5ea" alt="COMMUNITY:  followers. On GitHub" width="33.33%"></a>
+<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=42450f0d" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=c2fe6578" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
+<a href="https://github.com/rohit-anish"><img src="./cards/project3.svg?v=c9d88add" alt="AI Video Authenticity Detector: Flags deepfakes and edited video from frame, lighting and compression cues." width="50%"></a><a href="https://github.com/rohit-anish"><img src="./cards/project4.svg?v=1694d2f1" alt="IoT Smart Energy Monitor: ESP32 meter for voltage, current, power and kWh, shown locally and on the cloud." width="50%"></a>
+<img src="./cards/stack.svg?v=93ce6ddc" alt="Focus, stack and what I am learning" width="100%">
 
-<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=8bcf1c4b" alt="LinkedIn" height="40"></a>
-<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=2b3ccadd" alt="Email" height="40"></a>
+<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=08e2c208" alt="LinkedIn" height="40"></a>
+<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=1f9ff986" alt="Email" height="40"></a>
 
-<img src="./cards/footer.svg?v=0da000ae" alt="Cards refreshed daily by a GitHub Action" width="100%">
+<img src="./cards/footer.svg?v=d8c8c94c" alt="Cards refreshed daily by a GitHub Action" width="100%">
 
 </div>
 

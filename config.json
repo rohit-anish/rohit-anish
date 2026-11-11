@@ -72,15 +72,10 @@
     "TypeScript",
     "FastAPI",
     "React",
-    "Vite",
-    "Scikit-learn",
     "PostgreSQL",
+    "Scikit-learn",
     "ESP32",
-    "Arduino",
-    "Git",
-    "Vercel",
-    "Premiere Pro",
-    "Photoshop"
+    "Git"
   ],
   "projects": [
     {
