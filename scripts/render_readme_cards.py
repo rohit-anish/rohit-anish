@@ -247,7 +247,10 @@ def readme():
     L.append('<img src="./cards/footer.svg" alt="Cards refreshed daily by a GitHub Action" width="100%">\n\n</div>\n')
     repos_txt = "\n".join(f'- [{r["name"]}]({r["url"]}): {r["description"]}' for r in prof["featured"][:3])
     L.append(f'<details>\n<summary>Text version</summary>\n\n**{cfg["name"]}**: {cfg["role"]}. {cfg["tagline"]}\n\nFocus: {", ".join(cfg["focus"])}. Learning now: {", ".join(cfg["learning"])}.\n\n{repos_txt}\n\n</details>\n')
-    open(f"{ROOT}/README.md", "w").write("\n".join(L))
+    # cache-bust: version each card URL by its content hash so GitHub's image cache refreshes when a card changes
+    import hashlib, re
+    ver = lambda m: f'./cards/{m[1]}.svg?v={hashlib.sha1(open(f"{ROOT}/cards/{m[1]}.svg", "rb").read()).hexdigest()[:8]}'
+    open(f"{ROOT}/README.md", "w").write(re.sub(r"\./cards/([\w-]+)\.svg", ver, "\n".join(L)))
 
 if __name__ == "__main__":
     hero(); graph(); activity(); tiles(); heading(); repos(); stack(); chips(); footer(); readme()
