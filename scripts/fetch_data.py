@@ -1,48 +1,65 @@
-"""Fetch real profile data via GitHub GraphQL -> data/contributions.json + data/profile.json.
-Needs GITHUB_TOKEN. If anything fails, the previous JSON files are kept."""
-import json, os, sys, urllib.request
+"""Fetch real profile data -> data/contributions.json + data/profile.json.
+No token required. Contributions are read from the public contribution calendar
+(the same one shown on your profile, including private contributions if you enabled
+that setting). Repo/follower stats come from the REST API; GITHUB_TOKEN is optional
+and only raises the rate limit. If anything fails, the previous JSON files are kept."""
+import json, os, re, sys, urllib.request
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 cfg = json.load(open(os.path.join(ROOT, "config.json")))
-Q = """query($login:String!){ user(login:$login){
-  followers{totalCount}
-  repositories(privacy:PUBLIC, ownerAffiliations:OWNER, isFork:false, first:100){totalCount nodes{stargazerCount}}
-  pinnedItems(first:3, types:REPOSITORY){nodes{... on Repository{name description stargazerCount forkCount url primaryLanguage{name color}}}}
-  top: repositories(privacy:PUBLIC, ownerAffiliations:OWNER, isFork:false, first:3, orderBy:{field:STARGAZERS,direction:DESC}){nodes{name description stargazerCount forkCount url primaryLanguage{name color}}}
-  contributionsCollection{contributionCalendar{totalContributions weeks{contributionDays{date contributionCount}}}}
-}}"""
-FIELDS = "name description stargazerCount forkCount url primaryLanguage{name color}"
+USER = cfg["username"]
+TOK = os.environ.get("GITHUB_TOKEN")
+
+def get(url, api=True):
+    h = {"User-Agent": "profile-cards"}
+    if api:
+        h["Accept"] = "application/vnd.github+json"
+        if TOK: h["Authorization"] = f"Bearer {TOK}"
+    with urllib.request.urlopen(urllib.request.Request(url, headers=h), timeout=30) as r:
+        body = r.read().decode()
+    return json.loads(body) if api else body
+
+def contributions():
+    html = get(f"https://github.com/users/{USER}/contributions", api=False)
+    dates = dict(re.findall(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?id="([^"]+)"', html))
+    dates = {cid: d for d, cid in dates.items()}
+    counts = {}
+    for cid, text in re.findall(r'<tool-tip[^>]*?for="([^"]+)"[^>]*>([^<]*)</tool-tip>', html):
+        if cid in dates:
+            m = re.match(r"(\d[\d,]*) contribution", text)
+            counts[dates[cid]] = int(m.group(1).replace(",", "")) if m else 0
+    if len(counts) < 300: raise RuntimeError(f"calendar parse failed ({len(counts)} days)")
+    days = [{"date": d, "count": counts[d]} for d in sorted(counts)]
+    return {"sample": False, "total": sum(x["count"] for x in days), "days": days}
+
+def card(r):
+    lang = r.get("language") or ""
+    return {"name": r["name"], "description": r.get("description") or "", "stars": r["stargazers_count"],
+            "forks": r["forks_count"], "url": r["html_url"], "language": lang, "color": COLORS.get(lang, "#8b95b3")}
+
+COLORS = {"Python": "#3572A5", "TypeScript": "#3178c6", "JavaScript": "#f1e05a", "Go": "#00ADD8", "C++": "#f34b7d",
+          "C": "#555555", "C#": "#178600", "Java": "#b07219", "HTML": "#e34c26", "CSS": "#663399", "Rust": "#dea584",
+          "Jupyter Notebook": "#DA5B0B", "Shell": "#89e051", "Kotlin": "#A97BFF", "Dart": "#00B4AB", "ShaderLab": "#222c37"}
+
+def profile():
+    u = get(f"https://api.github.com/users/{USER}")
+    repos = get(f"https://api.github.com/users/{USER}/repos?per_page=100&type=owner")
+    own = [r for r in repos if not r["fork"]]
+    by_name = {r["name"].lower(): r for r in repos}
+    feat = [by_name[n.lower()] for n in cfg.get("featured_repos", []) if n.lower() in by_name]
+    rest = sorted((r for r in own if r not in feat and r["name"].lower() != USER.lower()),
+                  key=lambda r: (r["stargazers_count"], r["pushed_at"] or ""), reverse=True)
+    return {"sample": False, "followers": u["followers"], "repos": cfg.get("repo_count") or len(own),
+            "stars": sum(r["stargazers_count"] for r in own), "featured": [card(r) for r in (feat + rest)[:3]]}
+
 def main():
-    tok = os.environ.get("GITHUB_TOKEN")
-    if not tok: sys.exit("no GITHUB_TOKEN; keeping existing data")
-    req = urllib.request.Request("https://api.github.com/graphql",
-        data=json.dumps({"query": Q, "variables": {"login": cfg["username"]}}).encode(),
-        headers={"Authorization": f"bearer {tok}", "Content-Type": "application/json"})
-    d = json.load(urllib.request.urlopen(req, timeout=30))
-    if "errors" in d or not d.get("data", {}).get("user"): sys.exit(f"API error: {d.get('errors')}")
-    u = d["data"]["user"]
-    cal = u["contributionsCollection"]["contributionCalendar"]
-    days = [{"date": x["date"], "count": x["contributionCount"]} for w in cal["weeks"] for x in w["contributionDays"]]
-    json.dump({"sample": False, "total": cal["totalContributions"], "days": days},
-              open(os.path.join(ROOT, "data/contributions.json"), "w"))
-    named = []
-    for n in cfg.get("featured_repos", []):
-        q2 = 'query($o:String!,$n:String!){repository(owner:$o,name:$n){%s}}' % FIELDS
-        r2 = urllib.request.Request("https://api.github.com/graphql", data=json.dumps({"query": q2, "variables": {"o": cfg["username"], "n": n}}).encode(),
-            headers={"Authorization": f"bearer {tok}", "Content-Type": "application/json"})
+    ok = False
+    for name, fn in (("contributions", contributions), ("profile", profile)):
         try:
-            rp = json.load(urllib.request.urlopen(r2, timeout=30))["data"]["repository"]
-            if rp: named.append(rp)
-        except Exception as e: print("skip", n, e)
-    seen = {r["name"] for r in named}
-    rest = [r for r in (u["pinnedItems"]["nodes"] + u["top"]["nodes"]) if r["name"] not in seen]
-    feat = (named + rest)[:3]
-    json.dump({"sample": False, "followers": u["followers"]["totalCount"],
-               "repos": u["repositories"]["totalCount"],
-               "stars": sum(n["stargazerCount"] for n in u["repositories"]["nodes"]),
-               "featured": [{"name": r["name"], "description": r["description"] or "", "stars": r["stargazerCount"],
-                             "forks": r["forkCount"], "url": r["url"],
-                             "language": (r["primaryLanguage"] or {}).get("name", ""),
-                             "color": (r["primaryLanguage"] or {}).get("color") or "#8b95b3"} for r in feat]},
-              open(os.path.join(ROOT, "data/profile.json"), "w"), indent=1)
-    print("data refreshed")
+            data = fn()
+            json.dump(data, open(os.path.join(ROOT, f"data/{name}.json"), "w"), indent=None if name == "contributions" else 1)
+            print(f"{name}: refreshed"); ok = True
+        except Exception as e:
+            print(f"{name}: kept previous data ({e})")
+    if not ok: sys.exit(1)
+
 main()

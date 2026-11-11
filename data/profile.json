@@ -1,35 +1,35 @@
 {
- "sample": true,
- "followers": 42,
- "repos": 18,
- "stars": 130,
+ "sample": false,
+ "followers": 2,
+ "repos": 10,
+ "stars": 0,
  "featured": [
   {
    "name": "onboardAI",
-   "description": "AI-powered developer onboarding for unfamiliar codebases (sample text, replaced by live data).",
-   "stars": 64,
-   "forks": 9,
+   "description": "OnboardAI is an AI-powered developer onboarding platform that leverages Graphify and MCP to help new engineers understand software projects faster through automated architecture analysis, learning roadmaps, repository intelligence, and contextual project guidance.",
+   "stars": 0,
+   "forks": 0,
    "url": "https://github.com/rohit-anish/onboardAI",
-   "language": "TypeScript",
-   "color": "#3178c6"
-  },
-  {
-   "name": "Pragati",
-   "description": "AI textbook tutor for Tamil and Tanglish learners (sample text, replaced by live data).",
-   "stars": 41,
-   "forks": 5,
-   "url": "https://github.com/rohit-anish/Pragati",
-   "language": "TypeScript",
+   "language": "Python",
    "color": "#3572A5"
   },
   {
-   "name": "your-third-repo",
-   "description": "Pin a third repo on GitHub and it appears here.",
-   "stars": 25,
-   "forks": 2,
-   "url": "https://github.com/rohit-anish",
-   "language": "Go",
-   "color": "#00ADD8"
+   "name": "Pragati",
+   "description": "",
+   "stars": 0,
+   "forks": 0,
+   "url": "https://github.com/rohit-anish/Pragati",
+   "language": "",
+   "color": "#8b95b3"
+  },
+  {
+   "name": "ASR-Perfector",
+   "description": "",
+   "stars": 0,
+   "forks": 0,
+   "url": "https://github.com/rohit-anish/ASR-Perfector",
+   "language": "Python",
+   "color": "#3572A5"
   }
  ]
 }

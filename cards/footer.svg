@@ -28,4 +28,4 @@
 .cn-last{animation:cnl .001s linear both}
 @keyframes cnl{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
-</style><text x="450" y="22" text-anchor="middle" font-size="12" class="mono" fill="#8a8a85">refreshed 11 Nov 2026 - preview with sample data</text></svg>
+</style><text x="450" y="22" text-anchor="middle" font-size="12" class="mono" fill="#8a8a85">refreshed 11 Nov 2026 - rendered from live GitHub data</text></svg>

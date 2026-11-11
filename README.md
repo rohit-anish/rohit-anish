@@ -7,9 +7,9 @@
 <a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg" alt="STARS: stars. Earned across everything I ship in public." width="32.5%"></a>
 <a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg" alt="COMMUNITY: followers. Developers following the build, one commit at a time." width="32.5%"></a>
 <img src="./cards/heading.svg" alt="What I am building" width="100%">
-<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/repo1.svg" alt="Repository onboardAI: AI-powered developer onboarding for unfamiliar codebases (sample text, replaced by live data)." width="32.5%"></a>
-<a href="https://github.com/rohit-anish/Pragati"><img src="./cards/repo2.svg" alt="Repository Pragati: AI textbook tutor for Tamil and Tanglish learners (sample text, replaced by live data)." width="32.5%"></a>
-<a href="https://github.com/rohit-anish"><img src="./cards/repo3.svg" alt="Repository your-third-repo: Pin a third repo on GitHub and it appears here." width="32.5%"></a>
+<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/repo1.svg" alt="Repository onboardAI: OnboardAI is an AI-powered developer onboarding platform that leverages Graphify and MCP to help new engineers understand software projects faster through automated architecture analysis, learning roadmaps, repository intelligence, and contextual project guidance." width="32.5%"></a>
+<a href="https://github.com/rohit-anish/Pragati"><img src="./cards/repo2.svg" alt="Repository Pragati: " width="32.5%"></a>
+<a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/repo3.svg" alt="Repository ASR-Perfector: " width="32.5%"></a>
 <img src="./cards/stack.svg" alt="Focus areas and what I am learning now" width="100%">
 
 <a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg" alt="LinkedIn" height="40"></a>
@@ -27,8 +27,8 @@
 
 Focus: AI/ML, Backend, IoT & Embedded, Cloud, Cybersecurity. Learning now: PostgreSQL, TypeScript, Backend Architecture, Cloud Computing, Cybersecurity.
 
-- [onboardAI](https://github.com/rohit-anish/onboardAI): AI-powered developer onboarding for unfamiliar codebases (sample text, replaced by live data).
-- [Pragati](https://github.com/rohit-anish/Pragati): AI textbook tutor for Tamil and Tanglish learners (sample text, replaced by live data).
-- [your-third-repo](https://github.com/rohit-anish): Pin a third repo on GitHub and it appears here.
+- [onboardAI](https://github.com/rohit-anish/onboardAI): OnboardAI is an AI-powered developer onboarding platform that leverages Graphify and MCP to help new engineers understand software projects faster through automated architecture analysis, learning roadmaps, repository intelligence, and contextual project guidance.
+- [Pragati](https://github.com/rohit-anish/Pragati): 
+- [ASR-Perfector](https://github.com/rohit-anish/ASR-Perfector): 
 
 </details>
