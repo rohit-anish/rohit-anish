@@ -39,8 +39,8 @@
       "unit": "Studios",
       "text": "Creative agency · jatayustudio.in",
       "url": "https://jatayustudio.in",
-      "bg": "#5b2cf0",
-      "fg": "#ffffff"
+      "bg": "#f26a1b",
+      "fg": "#14141a"
     },
     {
       "label": "STARS",
@@ -48,8 +48,9 @@
       "unit": "stars",
       "text": "Across public repos",
       "url": "https://github.com/rohit-anish?tab=stars",
-      "bg": "#f0443a",
-      "fg": "#ffffff"
+      "bg": "#14141a",
+      "fg": "#ffffff",
+      "stroke": "#3d3a35"
     },
     {
       "label": "COMMUNITY",
@@ -57,7 +58,7 @@
       "unit": "followers",
       "text": "On GitHub",
       "url": "https://github.com/rohit-anish?tab=followers",
-      "bg": "#ffc61a",
+      "bg": "#f26a1b",
       "fg": "#14141a"
     }
   ],

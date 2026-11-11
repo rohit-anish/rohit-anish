@@ -12,8 +12,8 @@ prof = json.load(open(f"{ROOT}/data/profile.json"))
 
 PAPER, WHITE, EDGE = "#f4f2ec", "#fffefb", "#e2dfd5"
 INK, MUTE = "#14141a", "#6f6d66"
-VIOLET, CORAL, SUN = "#5b2cf0", "#f0443a", "#ffc61a"
-RAMP = ["#e9e6f4", "#cdbfff", "#a58bff", "#7a52f5", "#4a1fd6"]
+ACCENT = "#f26a1b"  # orange; INK is the black
+RAMP = ["#e8e3d8", "#f9cfb2", "#f6a06a", "#f26a1b", "#14141a"]
 
 FONTFILES = {"serif": ("serif-500", "RA Serif", 500, "normal"), "serifi": ("serif-i-500", "RA Serif", 500, "italic"),
              "sans": ("sans-400", "RA Sans", 400, "normal"), "sansb": ("sans-700", "RA Sans", 700, "normal"),
@@ -113,7 +113,7 @@ def hero():
     W, H = 900, 320; cx = W / 2
     first, rest = (cfg["name"].split(" ", 1) + [""])[:2]
     link = cfg["link_text"]; lw = len(link) * 7.8 + 8 + 9; lx = cx - lw / 2
-    body = card(W, H) +         f'<g class="rise" style="{D(.1)}"><text x="{cx}" y="64" text-anchor="middle" font-size="12" class="mono" fill="{MUTE}" letter-spacing="2.5">{esc(cfg["role"].upper())}</text></g>'         f'<g class="rise" style="{D(.3)}"><text x="{cx}" y="156" text-anchor="middle" font-size="80" class="serif" fill="{INK}">{esc(first)} <tspan class="serifi" fill="{VIOLET}">{esc(rest)}</tspan></text></g>'         f'<g class="fade" style="{D(.6)}"><rect x="{cx-24}" y="184" width="48" height="3" rx="1.5" fill="{VIOLET}"/></g>'         f'<g class="rise" style="{D(.75)}"><text x="{cx}" y="232" text-anchor="middle" font-size="19" class="sans" fill="{INK}" fill-opacity=".85">{esc(cfg["tagline"])}</text>'         f'<text x="{lx}" y="270" font-size="13" class="mono" fill="{INK}">{esc(link)}</text>{ARROW(lx + len(link)*7.8 + 8, 260, 9, VIOLET)}</g>'
+    body = card(W, H) +         f'<g class="rise" style="{D(.1)}"><text x="{cx}" y="64" text-anchor="middle" font-size="12" class="mono" fill="{MUTE}" letter-spacing="2.5">{esc(cfg["role"].upper())}</text></g>'         f'<g class="rise" style="{D(.3)}"><text x="{cx}" y="156" text-anchor="middle" font-size="80" class="serif" fill="{INK}">{esc(first)} <tspan class="serifi" fill="{ACCENT}">{esc(rest)}</tspan></text></g>'         f'<g class="fade" style="{D(.6)}"><rect x="{cx-24}" y="184" width="48" height="3" rx="1.5" fill="{ACCENT}"/></g>'         f'<g class="rise" style="{D(.75)}"><text x="{cx}" y="232" text-anchor="middle" font-size="19" class="sans" fill="{INK}" fill-opacity=".85">{esc(cfg["tagline"])}</text>'         f'<text x="{lx}" y="270" font-size="13" class="mono" fill="{INK}">{esc(link)}</text>{ARROW(lx + len(link)*7.8 + 8, 260, 9, ACCENT)}</g>'
     save("hero", svg(W, H, body, f"{cfg['name']} - GitHub profile", f"{cfg['name']}. {cfg['tagline']} {cfg['role']}.", ("serif", "serifi", "sans", "mono")))
 
 # ---------- CONTRIBUTION GRAPH ----------
@@ -130,7 +130,7 @@ def graph(t0=1.8):
         if row == 0 and d.month != last_m and d.day <= 7:
             labels.append(f'<text x="{x0 + col*pitch:.1f}" y="{y0-12}" font-size="10" class="mono" fill="{MUTE}">{d.strftime("%b")}</text>'); last_m = d.month
     body = card(W, H) + \
-        f'<g class="rise" style="{D(t0)}"><text x="42" y="62" font-size="30" class="serif" fill="{INK}">Every day, <tspan class="serifi" fill="{VIOLET}">in purple</tspan></text></g>' \
+        f'<g class="rise" style="{D(t0)}"><text x="42" y="62" font-size="30" class="serif" fill="{INK}">Every day, <tspan class="serifi" fill="{ACCENT}">in orange</tspan></text></g>' \
         f'<g class="fade" style="{D(t0+.3)}">{"".join(labels)}</g>{"".join(cells)}'
     save("graph", svg(W, H, body, "Contribution graph", f"{fmt(total)} contributions {PERIOD}.", ("serif", "serifi", "mono")))
 
@@ -140,7 +140,7 @@ def activity(t0=3.0):
     peak = max(mtot) or 1; bi = mtot.index(max(mtot)); bars = ""
     for i, ((yy, mm), v) in enumerate(zip(months, mtot)):
         h = max(3, v / peak * maxh); x = x0 + i * pitch; best = i == bi
-        bars += f'<rect class="grow" style="{D(t0 + .2 + i*.06)}" x="{x}" y="{base-h:.1f}" width="{bw}" height="{h:.1f}" rx="5" fill="{VIOLET if best else INK}" fill-opacity="{1 if best else .85}"><title>{dt.date(yy,mm,1):%B %Y}: {v}</title></rect>' \
+        bars += f'<rect class="grow" style="{D(t0 + .2 + i*.06)}" x="{x}" y="{base-h:.1f}" width="{bw}" height="{h:.1f}" rx="5" fill="{ACCENT if best else INK}" fill-opacity="{1 if best else .85}"><title>{dt.date(yy,mm,1):%B %Y}: {v}</title></rect>' \
                 f'<text x="{x+bw/2}" y="{base+22}" text-anchor="middle" font-size="10" class="mono" fill="{MUTE}">{dt.date(yy,mm,1):%b}</text>'
     side = f"{active} ACTIVE DAYS  ·  LONGEST STREAK {best_streak}"
     head = f"{YEAR} ON GITHUB" if YEAR else "THE LAST 12 MONTHS ON GITHUB"
@@ -159,7 +159,7 @@ def tiles(t0=4.2):
             val = t["value"]; shown = esc(val)
         else:
             val = int(prof[t["metric"]]); shown = fmt(val)
-        body = f'<g class="rise" style="{D(d0)}"><rect width="{W}" height="{H}" rx="18" fill="{bgc}"/>' \
+        body = f'<g class="rise" style="{D(d0)}"><rect x=".5" y=".5" width="{W-1}" height="{H-1}" rx="18" fill="{bgc}" stroke="{t.get('stroke', bgc)}"/>' \
                f'<text x="26" y="44" font-size="11" class="monob" fill="{fg}" fill-opacity=".8" letter-spacing="2">{esc(t["label"])}</text>' \
                f'{ARROW(W-40, 32, 12, fg)}' \
                f'<text x="26" y="118" font-size="{t.get("size", 56)}" class="serif" fill="{fg}">{shown}</text>' \
@@ -170,12 +170,12 @@ def tiles(t0=4.2):
 # ---------- REPOS ----------
 def repos(t0=5.4):
     for i, r in enumerate(prof["featured"][:3]):
-        W, H = CARD_W, 168; d0 = t0 + i * .2; col = r.get("color") or VIOLET
+        W, H = CARD_W, 168; d0 = t0 + i * .2; col = ACCENT
         desc = "".join(f'<text x="26" y="{82 + j*19}" font-size="13" class="sans" fill="{MUTE}">{esc(l)}</text>' for j, l in enumerate(wrap(r["description"], 36, 3)))
         lang = r["language"]
         foot = f'<circle cx="31" cy="140" r="5" fill="{col}"/><text x="44" y="144" font-size="12" class="mono" fill="{MUTE}">{esc(lang)}</text>' if lang else ""
         body = card(W, H, WHITE) + f'<g class="rise" style="{D(d0)}">' \
-            f'<text x="26" y="50" font-size="17" class="sansb" fill="{INK}">{esc(r["name"][:24])}</text>{ARROW(W-40, 36, 11, VIOLET)}{desc}{foot}</g>'
+            f'<text x="26" y="50" font-size="17" class="sansb" fill="{INK}">{esc(r["name"][:24])}</text>{ARROW(W-40, 36, 11, ACCENT)}{desc}{foot}</g>'
         save(f"repo{i+1}", svg(COL_W, H, third(i, body), r["name"], f'{r["name"]}: {r["description"]}', ("sans", "sansb", "mono")))
 
 # ---------- FOCUS ----------
@@ -197,7 +197,7 @@ def chips():
     for i, l in enumerate(cfg["links"]):
         w = int(60 + len(l["label"]) * 8.4); H = 42
         body = f'<rect x=".5" y=".5" width="{w-1}" height="{H-1}" rx="21" fill="{PAPER}" stroke="{EDGE}"/>' \
-               f'<text x="22" y="26" font-size="13" class="monob" fill="{INK}">{esc(l["label"])}</text>{ARROW(w-32, 14, 11, VIOLET)}'
+               f'<text x="22" y="26" font-size="13" class="monob" fill="{INK}">{esc(l["label"])}</text>{ARROW(w-32, 14, 11, ACCENT)}'
         save(f"chip{i+1}", svg(w, H, body, l["label"], f=("monob",)))
 def footer():
     note = "preview with sample data" if prof.get("sample") or cal.get("sample") else "rendered from live GitHub data"

@@ -28,4 +28,4 @@
 .cn-last{animation:cnl .001s linear both}
 @keyframes cnl{from{opacity:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important}}
-</style><rect x=".5" y=".5" width="126" height="41" rx="21" fill="#f4f2ec" stroke="#e2dfd5"/><text x="22" y="26" font-size="13" class="monob" fill="#14141a">LinkedIn</text><path d="M95 25 L106 14 M97 14 H106 V23" fill="none" stroke="#5b2cf0" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</style><rect x=".5" y=".5" width="126" height="41" rx="21" fill="#f4f2ec" stroke="#e2dfd5"/><text x="22" y="26" font-size="13" class="monob" fill="#14141a">LinkedIn</text><path d="M95 25 L106 14 M97 14 H106 V23" fill="none" stroke="#f26a1b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
