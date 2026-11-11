@@ -1,16 +1,16 @@
 <div align="center">
 
-<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=3f85534d" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
-<img src="./cards/graph.svg?v=fa0432c0" alt="Contribution graph for the last year" width="100%">
-<img src="./cards/activity.svg?v=b178370f" alt="Contributions per month, with current and longest streak" width="100%">
-<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=2e8912d1" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg?v=ed2c0cd3" alt="STARS:  stars. Across public repos" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg?v=6071d5ea" alt="COMMUNITY:  followers. On GitHub" width="33.33%"></a>
-<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/repo1.svg?v=6a7905d7" alt="Repository onboardAI: OnboardAI is an AI-powered developer onboarding platform that leverages Graphify and MCP to help new engineers understand software projects faster through automated architecture analysis, learning roadmaps, repository intelligence, and contextual project guidance." width="33.33%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/repo2.svg?v=629206d3" alt="Repository Pragati: " width="33.33%"></a><a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/repo3.svg?v=053f4079" alt="Repository ASR-Perfector: " width="33.33%"></a>
-<img src="./cards/stack.svg?v=59713884" alt="Focus areas" width="100%">
+<a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=7ef9cd04" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
+<img src="./cards/graph.svg?v=65f62b2b" alt="Contribution graph for the last year" width="100%">
+<img src="./cards/activity.svg?v=87e84117" alt="Contributions per month, with current and longest streak" width="100%">
+<a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=97c57fd9" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=stars"><img src="./cards/tile2.svg?v=774d0339" alt="STARS:  stars. Across public repos" width="33.33%"></a><a href="https://github.com/rohit-anish?tab=followers"><img src="./cards/tile3.svg?v=61463cda" alt="COMMUNITY:  followers. On GitHub" width="33.33%"></a>
+<a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/repo1.svg?v=3ea016a6" alt="Repository onboardAI: OnboardAI is an AI-powered developer onboarding platform that leverages Graphify and MCP to help new engineers understand software projects faster through automated architecture analysis, learning roadmaps, repository intelligence, and contextual project guidance." width="33.33%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/repo2.svg?v=b4ca93f4" alt="Repository Pragati: " width="33.33%"></a><a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/repo3.svg?v=5a762476" alt="Repository ASR-Perfector: " width="33.33%"></a>
+<img src="./cards/stack.svg?v=ae0a562b" alt="Focus areas" width="100%">
 
-<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=08e2c208" alt="LinkedIn" height="40"></a>
-<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=1f9ff986" alt="Email" height="40"></a>
+<a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=8bcf1c4b" alt="LinkedIn" height="40"></a>
+<a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=2b3ccadd" alt="Email" height="40"></a>
 
-<img src="./cards/footer.svg?v=d8c8c94c" alt="Cards refreshed daily by a GitHub Action" width="100%">
+<img src="./cards/footer.svg?v=0da000ae" alt="Cards refreshed daily by a GitHub Action" width="100%">
 
 </div>
 
