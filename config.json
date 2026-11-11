@@ -44,21 +44,22 @@
       "fg": "#14141a"
     },
     {
-      "label": "STARS",
-      "metric": "stars",
-      "unit": "stars",
-      "text": "Across public repos",
-      "url": "https://github.com/rohit-anish?tab=stars",
+      "label": "RESEARCH",
+      "value": "9.78%",
+      "unit": "WER",
+      "text": "ASR across English accents",
+      "url": "https://github.com/rohit-anish/ASR-Perfector",
       "bg": "#14141a",
       "fg": "#ffffff",
       "stroke": "#3d3a35"
     },
     {
-      "label": "COMMUNITY",
-      "metric": "followers",
-      "unit": "followers",
-      "text": "On GitHub",
-      "url": "https://github.com/rohit-anish?tab=followers",
+      "label": "SHIPPED",
+      "value": "MedPredict",
+      "size": 40,
+      "unit": "live",
+      "text": "AI vitals app · try the demo",
+      "url": "https://medpredict-iota.vercel.app",
       "bg": "#f26a1b",
       "fg": "#14141a"
     }
