@@ -5,7 +5,7 @@ that setting). Repo/follower stats come from the REST API; GITHUB_TOKEN is optio
 and only raises the rate limit. If anything fails, the previous JSON files are kept."""
 import datetime, json, os, re, sys, urllib.request
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
-cfg = json.load(open(os.path.join(ROOT, "config.json")))
+cfg = json.load(open(os.path.join(ROOT, "config.json"), encoding="utf-8"))
 USER = cfg["username"]
 TOK = os.environ.get("GITHUB_TOKEN")
 

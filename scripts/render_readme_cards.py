@@ -6,7 +6,7 @@ from xml.sax.saxutils import escape as esc
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 OUT = os.path.join(ROOT, "cards"); os.makedirs(OUT, exist_ok=True)
 STATIC = os.environ.get("STATIC") == "1"
-cfg = json.load(open(f"{ROOT}/config.json"))
+cfg = json.load(open(f"{ROOT}/config.json", encoding="utf-8"))
 cal = json.load(open(f"{ROOT}/data/contributions.json"))
 prof = json.load(open(f"{ROOT}/data/profile.json"))
 
@@ -61,8 +61,14 @@ CSS = """
 def svg(w, h, body, title, desc="", f=("sans", "mono")):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="t d">'
             f'<title id="t">{esc(title)}</title><desc id="d">{esc(desc or title)}</desc><style>{fonts(f)}{CSS}</style>{body}</svg>')
+GAP = {"hero": 18, "graph": 18, "activity": 18, "tile": 18, "repo": 18, "stack": 22}  # space below cards so they don't touch
 def save(name, s):
-    open(f"{OUT}/{name}.svg", "w").write(s); print(f"{name:10s}{len(s)/1024:7.1f} KB")
+    g = GAP.get(name.rstrip("0123456789"), 0)
+    if g:
+        import re as _re
+        m = _re.match(r'<svg[^>]*? height="(\d+)" viewBox="0 0 (\d+) (\d+)"', s)
+        s = s.replace(m[0], m[0].replace(f' height="{m[1]}"', f' height="{int(m[1])+g}"').replace(f'0 0 {m[2]} {m[3]}"', f'0 0 {m[2]} {int(m[3])+g}"'), 1)
+    open(f"{OUT}/{name}.svg", "w", encoding="utf-8").write(s); print(f"{name:10s}{len(s)/1024:7.1f} KB")
 def D(x): return f"animation-delay:{x:.2f}s"
 def card(w, h, fill=PAPER, stroke=EDGE):
     return f'<rect x=".5" y=".5" width="{w-1}" height="{h-1}" rx="18" fill="{fill}" stroke="{stroke}"/>'
@@ -108,7 +114,7 @@ def hero():
 
 # ---------- CONTRIBUTION GRAPH ----------
 def graph(t0=1.8):
-    W, H = 900, 262; x0, y0, cs, pitch = 42, 108, 12, 15.4
+    W, H = 900, 250; x0, y0, cs, pitch = 42, 112, 12, 15.4
     first = days[0][0]; mx = max(c for _, c in days) or 1
     def lvl(c):
         if c == 0: return 0
@@ -118,96 +124,69 @@ def graph(t0=1.8):
         col = (d - first).days // 7; row = (d.weekday() + 1) % 7
         cells.append(f'<rect class="pop" style="{D(t0 + .1 + col * .022)}" x="{x0 + col*pitch:.1f}" y="{y0 + row*pitch:.1f}" width="{cs}" height="{cs}" rx="3" fill="{RAMP[lvl(c)]}"><title>{d}: {c}</title></rect>')
         if row == 0 and d.month != last_m and d.day <= 7:
-            labels.append(f'<text x="{x0 + col*pitch:.1f}" y="{y0-10}" font-size="10" class="mono" fill="{MUTE}">{d.strftime("%b")}</text>'); last_m = d.month
-    lx = 858 - 5 * 17
-    leg = "".join(f'<rect x="{lx + i*17}" y="{H-36}" width="12" height="12" rx="3" fill="{c}"/>' for i, c in enumerate(RAMP))
+            labels.append(f'<text x="{x0 + col*pitch:.1f}" y="{y0-12}" font-size="10" class="mono" fill="{MUTE}">{d.strftime("%b")}</text>'); last_m = d.month
     body = card(W, H) + \
-        f'<g class="rise" style="{D(t0)}"><text x="42" y="62" font-size="32" class="serif" fill="{INK}">Every day, <tspan class="serifi" fill="{VIOLET}">in purple</tspan></text>' \
-        f'<text x="858" y="56" text-anchor="end" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">REFRESHED DAILY</text></g>' \
-        f'<g class="fade" style="{D(t0+.3)}">{"".join(labels)}</g>{"".join(cells)}' \
-        f'<g class="fade" style="{D(t0+1.4)}"><text x="{lx-8}" y="{H-26}" text-anchor="end" font-size="10" class="mono" fill="{MUTE}">less</text>{leg}<text x="{lx+5*17+4}" y="{H-26}" font-size="10" class="mono" fill="{MUTE}">more</text></g>'
+        f'<g class="rise" style="{D(t0)}"><text x="42" y="62" font-size="30" class="serif" fill="{INK}">Every day, <tspan class="serifi" fill="{VIOLET}">in purple</tspan></text></g>' \
+        f'<g class="fade" style="{D(t0+.3)}">{"".join(labels)}</g>{"".join(cells)}'
     save("graph", svg(W, H, body, "Contribution graph", f"{fmt(total)} contributions {PERIOD}.", ("serif", "serifi", "mono")))
 
 # ---------- ACTIVITY ----------
 def activity(t0=3.0):
-    W, H = 900, 292; base, maxh, bw, pitch, x0 = 252, 96, 28, 38, 42
+    W, H = 900, 276; base, maxh, bw, pitch, x0 = 226, 86, 36, 69, 50
     peak = max(mtot) or 1; bi = mtot.index(max(mtot)); bars = ""
     for i, ((yy, mm), v) in enumerate(zip(months, mtot)):
-        h = max(4, v / peak * maxh); x = x0 + i * pitch; best = i == bi
-        bars += f'<rect class="grow" style="{D(t0 + .2 + i*.06)}" x="{x}" y="{base-h:.1f}" width="{bw}" height="{h:.1f}" rx="5" fill="{VIOLET if best else INK}"><title>{dt.date(yy,mm,1):%B %Y}: {v}</title></rect>' \
-                f'<text x="{x+bw/2}" y="{base+20}" text-anchor="middle" font-size="10" class="mono" fill="{MUTE}">{dt.date(yy,mm,1):%b}</text>'
-        if best: bars += f'<text class="pop mono" style="{D(t0+1.2)}" x="{x+bw/2}" y="{base-h-9:.1f}" text-anchor="middle" font-size="11" fill="{VIOLET}">{fmt(v)}</text>'
-    rows = [(f"{cur_streak}", f" / {best_streak}", "days: current streak, and the longest"),
-            (f"{active}", f" / {elapsed}", "days with a commit"),
-            (f"{busy_c}", "", f"contributions on the busiest day, {busy_d:%b} {busy_d.day}")]
-    st = ""
-    for i, (a, b, cap) in enumerate(rows):
-        y = 100 + i * 78
-        st += f'<g class="rise" style="{D(t0 + .5 + i*.18)}"><text x="590" y="{y}" font-size="40" class="serifi" fill="{INK}">{a}<tspan fill="{MUTE}" fill-opacity=".7">{b}</tspan></text>' \
-              f'<text x="590" y="{y+22}" font-size="12.5" class="sans" fill="{MUTE}">{esc(cap)}</text>' + \
-              (f'<line x1="590" x2="858" y1="{y+40}" y2="{y+40}" stroke="{EDGE}"/>' if i < 2 else "") + '</g>'
+        h = max(3, v / peak * maxh); x = x0 + i * pitch; best = i == bi
+        bars += f'<rect class="grow" style="{D(t0 + .2 + i*.06)}" x="{x}" y="{base-h:.1f}" width="{bw}" height="{h:.1f}" rx="5" fill="{VIOLET if best else INK}" fill-opacity="{1 if best else .85}"><title>{dt.date(yy,mm,1):%B %Y}: {v}</title></rect>' \
+                f'<text x="{x+bw/2}" y="{base+22}" text-anchor="middle" font-size="10" class="mono" fill="{MUTE}">{dt.date(yy,mm,1):%b}</text>'
+    side = f"{active} ACTIVE DAYS  ·  LONGEST STREAK {best_streak}"
+    head = f"{YEAR} ON GITHUB" if YEAR else "THE LAST 12 MONTHS ON GITHUB"
     body = card(W, H) + \
-        f'<g class="rise" style="{D(t0)}"><text x="42" y="54" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">{f"{YEAR} ON GITHUB" if YEAR else "THE LAST 12 MONTHS ON GITHUB"}</text>' \
-        f'<text x="42" y="104" font-size="48" class="serif" fill="{INK}">{fmt(total)} <tspan class="serifi">contributions</tspan></text></g>{bars}{st}'
-    save("activity", svg(W, H, body, "Monthly contributions", f"{fmt(total)} contributions. Best month {dt.date(*months[bi],1):%B %Y}. Current streak {cur_streak} days.", ("serif", "serifi", "sans", "mono")))
+        f'<g class="rise" style="{D(t0)}"><text x="42" y="52" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">{head}</text>' \
+        f'<text x="42" y="98" font-size="44" class="serif" fill="{INK}">{fmt(total)} <tspan class="serifi">contributions</tspan></text>' \
+        f'<text x="858" y="94" text-anchor="end" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1">{side}</text></g>{bars}'
+    save("activity", svg(W, H, body, "Monthly contributions", f"{fmt(total)} contributions {PERIOD}. {active} active days, longest streak {best_streak}.", ("serif", "serifi", "mono")))
 
 # ---------- TILES ----------
 def tiles(t0=4.2):
-    W, H = 290, 230
+    W, H = 290, 200
     for i, t in enumerate(cfg["tiles"]):
         bgc, fg = t["bg"], t["fg"]; d0 = t0 + i * .22
-        N, dtf = 18, .045
-        if "value" in t:  # static text tile (no live metric, no count-up)
-            val = t["value"]; frames = ""
-            final = f'<text class="cn-last serif" style="animation-delay:{d0+.5:.3f}s" x="24" y="122" font-size="{t.get("size", 64)}" fill="{fg}">{esc(val)}</text>'
+        if "value" in t:
+            val = t["value"]; shown = esc(val)
         else:
-          val = int(prof[t["metric"]])
-          frames = "".join(f'<text class="cn serif" style="animation-delay:{d0+.5+k*dtf:.3f}s;animation-duration:{dtf}s" x="24" y="122" font-size="64" fill="{fg}">{fmt(round(val*(1-(1-(k+1)/N)**3)))}</text>' for k in range(N - 1))
-          final = f'<text class="cn-last serif" style="animation-delay:{d0+.5+(N-1)*dtf:.3f}s" x="24" y="122" font-size="64" fill="{fg}">{fmt(val)}</text>'
-        desc = "".join(f'<text x="24" y="{176 + j*19}" font-size="13.5" class="sans" fill="{fg}" fill-opacity=".92">{esc(l)}</text>' for j, l in enumerate(wrap(t["text"], 34, 2)))
-        body = f'<defs><clipPath id="c{i}"><rect width="{W}" height="{H}" rx="18"/></clipPath><linearGradient id="s{i}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>' \
-               f'<g class="tile" style="{D(d0)}"><g clip-path="url(#c{i})"><rect width="{W}" height="{H}" fill="{bgc}"/>' \
-               f'<circle cx="{W-30}" cy="30" r="150" fill="{fg}" fill-opacity=".06"/>' \
-               f'<rect class="shine" x="-340" y="0" width="120" height="{H}" fill="url(#s{i})" transform="skewX(-18)" style="animation-delay:{d0+2.5+i*.8:.1f}s"/></g>' \
-               f'<text x="24" y="42" font-size="12" class="monob" fill="{fg}" fill-opacity=".9" letter-spacing="2">{esc(t["label"])}</text>' \
-               f'<circle class="pulse" cx="{W-30}" cy="37" r="7" fill="none" stroke="{fg}" stroke-width="2" style="animation-delay:{d0+1}s"/>' \
-               f'<g class="nudge" style="animation-delay:{d0}s">{ARROW(W-38, 30, 15, fg)}</g>' \
-               f'{frames}{final}<text x="24" y="152" font-size="26" class="serifi" fill="{fg}" fill-opacity=".95">{esc(t["unit"])}</text>{desc}</g>'
-        save(f"tile{i+1}", svg(W, H, body, f'{t["label"]}: {val} {t["unit"]}', t["text"], ("serif", "serifi", "sans", "mono", "monob")))
+            val = int(prof[t["metric"]]); shown = fmt(val)
+        body = f'<g class="rise" style="{D(d0)}"><rect width="{W}" height="{H}" rx="18" fill="{bgc}"/>' \
+               f'<text x="26" y="44" font-size="11" class="monob" fill="{fg}" fill-opacity=".8" letter-spacing="2">{esc(t["label"])}</text>' \
+               f'{ARROW(W-40, 32, 12, fg)}' \
+               f'<text x="26" y="118" font-size="{t.get("size", 56)}" class="serif" fill="{fg}">{shown}</text>' \
+               f'<text x="26" y="146" font-size="22" class="serifi" fill="{fg}" fill-opacity=".95">{esc(t["unit"])}</text>' \
+               f'<text x="26" y="176" font-size="13" class="sans" fill="{fg}" fill-opacity=".8">{esc(t["text"])}</text></g>'
+        save(f"tile{i+1}", svg(W, H, body, f'{t["label"]}: {val} {t["unit"]}', t["text"], ("serif", "serifi", "sans", "monob")))
 
-# ---------- HEADING + REPOS ----------
-def heading(t0=5.4):
-    W, H = 900, 76
-    body = card(W, H) + f'<g class="rise" style="{D(t0)}"><text x="42" y="50" font-size="34" class="serif" fill="{INK}">What I\'m <tspan class="serifi" fill="{VIOLET}">building</tspan></text>' \
-        f'<text x="858" y="45" text-anchor="end" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">FEATURED PROJECTS</text></g>'
-    save("heading", svg(W, H, body, "What I'm building", f=("serif", "serifi", "mono")))
-STAR = "M6 .6l1.7 3.6 3.9.5-2.9 2.7.8 3.9L6 9.3 2.5 11.3l.8-3.9L.4 4.7l3.9-.5z"
-def repos(t0=5.7):
+# ---------- REPOS ----------
+def repos(t0=5.4):
     for i, r in enumerate(prof["featured"][:3]):
-        W, H = 290, 214; d0 = t0 + i * .2; col = r.get("color") or VIOLET
-        desc = "".join(f'<text x="24" y="{84 + j*20}" font-size="13.5" class="sans" fill="{MUTE}">{esc(l)}</text>' for j, l in enumerate(wrap(r["description"], 34, 4)))
-        lang = r["language"] or "n/a"; sx = 24 + len(lang) * 7.3 + 14
-        body = card(W, H, WHITE) + f'<g class="rise" style="{D(d0)}"><circle cx="30" cy="42" r="5" fill="{col}"/>' \
-            f'<text x="44" y="48" font-size="18" class="sansb" fill="{INK}">{esc(r["name"][:22])}</text>{desc}' \
-            f'<text x="24" y="190" font-size="12" class="mono" fill="{MUTE}">{esc(lang)}</text>' \
-            f'<g transform="translate({sx:.1f} 180)"><path d="{STAR}" fill="{SUN}"/></g><text x="{sx+17:.1f}" y="190" font-size="12" class="mono" fill="{MUTE}">{fmt(r["stars"])}</text></g>'
-        save(f"repo{i+1}", svg(W, H, body, r["name"], f'{r["name"]}: {r["description"]}. {r["stars"]} stars.', ("sans", "sansb", "mono")))
+        W, H = 290, 168; d0 = t0 + i * .2; col = r.get("color") or VIOLET
+        desc = "".join(f'<text x="26" y="{82 + j*19}" font-size="13" class="sans" fill="{MUTE}">{esc(l)}</text>' for j, l in enumerate(wrap(r["description"], 36, 3)))
+        lang = r["language"]
+        foot = f'<circle cx="31" cy="140" r="5" fill="{col}"/><text x="44" y="144" font-size="12" class="mono" fill="{MUTE}">{esc(lang)}</text>' if lang else ""
+        body = card(W, H, WHITE) + f'<g class="rise" style="{D(d0)}">' \
+            f'<text x="26" y="50" font-size="17" class="sansb" fill="{INK}">{esc(r["name"][:24])}</text>{ARROW(W-40, 36, 11, VIOLET)}{desc}{foot}</g>'
+        save(f"repo{i+1}", svg(W, H, body, r["name"], f'{r["name"]}: {r["description"]}', ("sans", "sansb", "mono")))
 
-# ---------- FOCUS / LEARNING ----------
+# ---------- FOCUS ----------
 def pills(items, y, t0, col, tint):
     out, x = "", 42
     for i, t in enumerate(items):
         w = int(len(t) * 8.0 + 32)
-        out += f'<g class="pop" style="{D(t0 + i*.12)}"><rect x="{x}" y="{y}" width="{w}" height="34" rx="17" fill="{tint}" stroke="{col}" stroke-opacity=".55"/><text x="{x+w/2}" y="{y+22}" text-anchor="middle" font-size="13" class="mono" fill="{INK}">{esc(t)}</text></g>'
-        x += w + 10
+        out += f'<g class="pop" style="{D(t0 + i*.12)}"><rect x="{x}" y="{y}" width="{w}" height="34" rx="17" fill="{tint}" stroke="{col}" stroke-opacity=".35"/><text x="{x+w/2}" y="{y+22}" text-anchor="middle" font-size="13" class="mono" fill="{INK}">{esc(t)}</text></g>'
+        x += w + 12
     return out
-def stack(t0=6.6):
-    W, H = 900, 212
-    body = card(W, H) + f'<g class="rise" style="{D(t0)}"><text x="42" y="44" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">FOCUS</text></g>' \
-        + pills(cfg["focus"], 56, t0 + .2, INK, WHITE) \
-        + f'<g class="rise" style="{D(t0+.8)}"><text x="42" y="124" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">CURRENTLY LEARNING</text></g>' \
-        + pills(cfg["learning"], 136, t0 + 1.0, VIOLET, "#ece6ff")
-    save("stack", svg(W, H, body, "Focus areas and currently learning", "Focus: " + ", ".join(cfg["focus"]) + ". Learning: " + ", ".join(cfg["learning"]), ("mono",)))
+def stack(t0=6.2):
+    W, H = 900, 120
+    body = card(W, H) + f'<g class="rise" style="{D(t0)}"><text x="42" y="46" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">FOCUS</text></g>' \
+        + pills(cfg["focus"], 60, t0 + .2, INK, WHITE)
+    save("stack", svg(W, H, body, "Focus areas", "Focus: " + ", ".join(cfg["focus"]), ("mono",)))
 
 # ---------- CHIPS + FOOTER ----------
 def chips():
@@ -230,9 +209,8 @@ def readme():
     L.append('<img src="./cards/graph.svg" alt="Contribution graph for the last year" width="100%">')
     L.append('<img src="./cards/activity.svg" alt="Contributions per month, with current and longest streak" width="100%">')
     for i, t in enumerate(cfg["tiles"]): L.append(a(t["url"], f"tile{i+1}", f'{t["label"]}: {t.get("value", "")} {t["unit"]}. {t["text"]}', 'width="32.5%"'))
-    L.append('<img src="./cards/heading.svg" alt="What I am building" width="100%">')
     for i, r in enumerate(prof["featured"][:3]): L.append(a(r["url"], f"repo{i+1}", f'Repository {r["name"]}: {r["description"]}', 'width="32.5%"'))
-    L.append('<img src="./cards/stack.svg" alt="Focus areas and what I am learning now" width="100%">')
+    L.append('<img src="./cards/stack.svg" alt="Focus areas" width="100%">')
     L.append("\n" + "\n".join(a(l["url"], f"chip{i+1}", l["label"], 'height="40"') for i, l in enumerate(cfg["links"])) + "\n")
     L.append('<img src="./cards/footer.svg" alt="Cards refreshed daily by a GitHub Action" width="100%">\n\n</div>\n')
     repos_txt = "\n".join(f'- [{r["name"]}]({r["url"]}): {r["description"]}' for r in prof["featured"][:3])
@@ -240,7 +218,7 @@ def readme():
     # cache-bust: version each card URL by its content hash so GitHub's image cache refreshes when a card changes
     import hashlib, re
     ver = lambda m: f'./cards/{m[1]}.svg?v={hashlib.sha1(open(f"{ROOT}/cards/{m[1]}.svg", "rb").read()).hexdigest()[:8]}'
-    open(f"{ROOT}/README.md", "w").write(re.sub(r"\./cards/([\w-]+)\.svg", ver, "\n".join(L)))
+    open(f"{ROOT}/README.md", "w", encoding="utf-8").write(re.sub(r"\./cards/([\w-]+)\.svg", ver, "\n".join(L)))
 
 if __name__ == "__main__":
-    hero(); graph(); activity(); tiles(); heading(); repos(); stack(); chips(); footer(); readme()
+    hero(); graph(); activity(); tiles(); repos(); stack(); chips(); footer(); readme()

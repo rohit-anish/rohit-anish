@@ -11,10 +11,6 @@
     {
       "label": "Email",
       "url": "mailto:rohitanishp@gmail.com"
-    },
-    {
-      "label": "GitHub",
-      "url": "https://github.com/rohit-anish"
     }
   ],
   "repo_count": 10,
@@ -41,8 +37,8 @@
       "label": "BUILDING",
       "value": "Jatayu",
       "unit": "Studios",
-      "text": "A creative agency. Visit jatayustudios.in",
-      "url": "https://jatayustudios.in",
+      "text": "Creative agency · jatayustudio.in",
+      "url": "https://jatayustudio.in",
       "bg": "#5b2cf0",
       "fg": "#ffffff"
     },
@@ -50,7 +46,7 @@
       "label": "STARS",
       "metric": "stars",
       "unit": "stars",
-      "text": "Earned across everything I ship in public.",
+      "text": "Across public repos",
       "url": "https://github.com/rohit-anish?tab=stars",
       "bg": "#f0443a",
       "fg": "#ffffff"
@@ -59,7 +55,7 @@
       "label": "COMMUNITY",
       "metric": "followers",
       "unit": "followers",
-      "text": "Developers following the build, one commit at a time.",
+      "text": "On GitHub",
       "url": "https://github.com/rohit-anish?tab=followers",
       "bg": "#ffc61a",
       "fg": "#14141a"
