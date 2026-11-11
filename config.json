@@ -23,7 +23,8 @@
     "Backend",
     "IoT & Embedded",
     "Cloud",
-    "Cybersecurity"
+    "Cybersecurity",
+    "Creative Tech"
   ],
   "learning": [
     "PostgreSQL",
@@ -63,5 +64,65 @@
     }
   ],
   "link_text": "github.com/rohit-anish",
-  "contribution_year": "current"
+  "contribution_year": "current",
+  "stack": [
+    "Python",
+    "C++",
+    "JavaScript",
+    "TypeScript",
+    "FastAPI",
+    "React",
+    "Vite",
+    "Scikit-learn",
+    "PostgreSQL",
+    "ESP32",
+    "Arduino",
+    "Git",
+    "Vercel",
+    "Premiere Pro",
+    "Photoshop"
+  ],
+  "projects": [
+    {
+      "name": "OnboardAI",
+      "url": "https://github.com/rohit-anish/onboardAI",
+      "text": "AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP.",
+      "tags": [
+        "Python",
+        "FastMCP",
+        "NetworkX",
+        "MCP"
+      ]
+    },
+    {
+      "name": "Pragati",
+      "url": "https://github.com/rohit-anish/Pragati",
+      "text": "AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source.",
+      "tags": [
+        "FastAPI",
+        "React",
+        "NVIDIA NIM",
+        "Sarvam AI"
+      ]
+    },
+    {
+      "name": "AI Video Authenticity Detector",
+      "text": "Flags deepfakes and edited video from frame, lighting and compression cues.",
+      "tags": [
+        "Python",
+        "Scikit-learn",
+        "Random Forest"
+      ]
+    },
+    {
+      "name": "IoT Smart Energy Monitor",
+      "text": "ESP32 meter for voltage, current, power and kWh, shown locally and on the cloud.",
+      "tags": [
+        "ESP32",
+        "ACS712",
+        "ZMPT101B",
+        "Blynk"
+      ]
+    }
+  ]
 }

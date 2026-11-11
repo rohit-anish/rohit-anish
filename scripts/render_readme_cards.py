@@ -61,7 +61,7 @@ CSS = """
 def svg(w, h, body, title, desc="", f=("sans", "mono")):
     return (f'<svg xmlns="http://www.w3.org/2000/svg" width="{w}" height="{h}" viewBox="0 0 {w} {h}" role="img" aria-labelledby="t d">'
             f'<title id="t">{esc(title)}</title><desc id="d">{esc(desc or title)}</desc><style>{fonts(f)}{CSS}</style>{body}</svg>')
-GAP = {"hero": 16, "graph": 16, "activity": 16, "tile": 16, "repo": 16, "stack": 16}
+GAP = {"hero": 16, "graph": 16, "activity": 16, "tile": 16, "repo": 16, "project": 16, "stack": 16}
 # 3-up rows: each image is 300 wide (1/3 of 900); the 284-wide card is shifted so the
 # outer edges align with full-width cards and both inner gaps are 16.
 COL_W, CARD_W = 300, 284
@@ -167,30 +167,39 @@ def tiles(t0=4.2):
                f'<text x="26" y="176" font-size="13" class="sans" fill="{fg}" fill-opacity=".8">{esc(t["text"])}</text></g>'
         save(f"tile{i+1}", svg(COL_W, H, third(i, body), f'{t["label"]}: {val} {t["unit"]}', t["text"], ("serif", "serifi", "sans", "monob")))
 
-# ---------- REPOS ----------
-def repos(t0=5.4):
-    for i, r in enumerate(prof["featured"][:3]):
-        W, H = CARD_W, 168; d0 = t0 + i * .2; col = ACCENT
-        desc = "".join(f'<text x="26" y="{82 + j*19}" font-size="13" class="sans" fill="{MUTE}">{esc(l)}</text>' for j, l in enumerate(wrap(r["description"], 36, 3)))
-        lang = r["language"]
-        foot = f'<circle cx="31" cy="140" r="5" fill="{col}"/><text x="44" y="144" font-size="12" class="mono" fill="{MUTE}">{esc(lang)}</text>' if lang else ""
+# ---------- PROJECTS (2 x 2) ----------
+HALF_W, HALF_CARD = 450, 442  # two cards + one 16 gap = 900
+def half(i, body): return f'<g transform="translate({(i % 2) * (HALF_W - HALF_CARD)} 0)">{body}</g>'
+def projects(t0=5.4):
+    for i, p in enumerate(cfg["projects"]):
+        W, H = HALF_CARD, 184; d0 = t0 + i * .15
+        desc = "".join(f'<text x="28" y="{108 + j*20}" font-size="13.5" class="sans" fill="{MUTE}">{esc(l)}</text>' for j, l in enumerate(wrap(p["text"], 56, 2)))
         body = card(W, H, WHITE) + f'<g class="rise" style="{D(d0)}">' \
-            f'<text x="26" y="50" font-size="17" class="sansb" fill="{INK}">{esc(r["name"][:24])}</text>{ARROW(W-40, 36, 11, ACCENT)}{desc}{foot}</g>'
-        save(f"repo{i+1}", svg(COL_W, H, third(i, body), r["name"], f'{r["name"]}: {r["description"]}', ("sans", "sansb", "mono")))
+            f'<text x="28" y="44" font-size="11" class="mono" fill="{ACCENT}" letter-spacing="1.5">{i+1:02d}</text>{ARROW(W-42, 32, 11, ACCENT) if p.get("url") else ""}' \
+            f'<text x="28" y="78" font-size="19" class="sansb" fill="{INK}">{esc(p["name"])}</text>{desc}' \
+            f'<text x="28" y="{H-26}" font-size="11.5" class="mono" fill="{INK}" fill-opacity=".7">{esc("  ·  ".join(p["tags"]))}</text></g>'
+        save(f"project{i+1}", svg(HALF_W, H, half(i, body), p["name"], f'{p["name"]}: {p["text"]} Built with {", ".join(p["tags"])}.', ("sans", "sansb", "mono")))
 
-# ---------- FOCUS ----------
-def pills(items, y, t0, col, tint):
+# ---------- SKILLS: focus / stack / learning ----------
+PILL = {"focus": (WHITE, INK, INK, .35), "stack": (INK, "#ffffff", INK, 1), "learning": ("#fde4d3", INK, ACCENT, .6)}
+def pill_rows(items, y, t0, kind):
+    fill, txt, stroke, so = PILL[kind]
     out, x = "", 42
     for i, t in enumerate(items):
-        w = int(len(t) * 8.0 + 32)
-        out += f'<g class="pop" style="{D(t0 + i*.12)}"><rect x="{x}" y="{y}" width="{w}" height="34" rx="17" fill="{tint}" stroke="{col}" stroke-opacity=".35"/><text x="{x+w/2}" y="{y+22}" text-anchor="middle" font-size="13" class="mono" fill="{INK}">{esc(t)}</text></g>'
-        x += w + 12
-    return out
-def stack(t0=6.2):
-    W, H = 900, 120
-    body = card(W, H) + f'<g class="rise" style="{D(t0)}"><text x="42" y="46" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">FOCUS</text></g>' \
-        + pills(cfg["focus"], 60, t0 + .2, INK, WHITE)
-    save("stack", svg(W, H, body, "Focus areas", "Focus: " + ", ".join(cfg["focus"]), ("mono",)))
+        w = int(len(t) * 7.8 + 30)
+        if x + w > 858: x, y = 42, y + 44
+        out += f'<g class="pop" style="{D(t0 + i*.06)}"><rect x="{x}" y="{y}" width="{w}" height="32" rx="16" fill="{fill}" stroke="{stroke}" stroke-opacity="{so}"/>' \
+               f'<text x="{x+w/2}" y="{y+21}" text-anchor="middle" font-size="12.5" class="mono" fill="{txt}">{esc(t)}</text></g>'
+        x += w + 10
+    return out, y + 32
+def stack(t0=6.0):
+    W = 900; body, y = "", 40
+    for kind, label in (("focus", "FOCUS"), ("stack", "STACK  ·  PRACTICED"), ("learning", "CURRENTLY LEARNING")):
+        body += f'<g class="rise" style="{D(t0)}"><text x="42" y="{y+6}" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">{label}</text></g>'
+        rows, y = pill_rows(cfg[kind], y + 20, t0 + .15, kind); body += rows; y += 34; t0 += .4
+    H = y + 6
+    save("stack", svg(W, H, card(W, H) + body, "Focus, stack and learning",
+                      f'Focus: {", ".join(cfg["focus"])}. Stack: {", ".join(cfg["stack"])}. Learning: {", ".join(cfg["learning"])}.', ("mono",)))
 
 # ---------- CHIPS + FOOTER ----------
 def chips():
@@ -213,16 +222,18 @@ def readme():
     L.append('<img src="./cards/graph.svg" alt="Contribution graph for the last year" width="100%">')
     L.append('<img src="./cards/activity.svg" alt="Contributions per month, with current and longest streak" width="100%">')
     L.append("".join(a(t["url"], f"tile{i+1}", f'{t["label"]}: {t.get("value", "")} {t["unit"]}. {t["text"]}', 'width="33.33%"') for i, t in enumerate(cfg["tiles"])))
-    L.append("".join(a(r["url"], f"repo{i+1}", f'Repository {r["name"]}: {r["description"]}', 'width="33.33%"') for i, r in enumerate(prof["featured"][:3])))
-    L.append('<img src="./cards/stack.svg" alt="Focus areas" width="100%">')
+    P = cfg["projects"]; purl = lambda x: x.get("url") or f"https://github.com/{u}"
+    for k in range(0, len(P), 2):
+        L.append("".join(a(purl(x), f"project{k+j+1}", f'{x["name"]}: {x["text"]}', 'width="50%"') for j, x in enumerate(P[k:k+2])))
+    L.append('<img src="./cards/stack.svg" alt="Focus, stack and what I am learning" width="100%">')
     L.append("\n" + "\n".join(a(l["url"], f"chip{i+1}", l["label"], 'height="40"') for i, l in enumerate(cfg["links"])) + "\n")
     L.append('<img src="./cards/footer.svg" alt="Cards refreshed daily by a GitHub Action" width="100%">\n\n</div>\n')
-    repos_txt = "\n".join(f'- [{r["name"]}]({r["url"]}): {r["description"]}' for r in prof["featured"][:3])
-    L.append(f'<details>\n<summary>Text version</summary>\n\n**{cfg["name"]}**: {cfg["role"]}. {cfg["tagline"]}\n\nFocus: {", ".join(cfg["focus"])}. Learning now: {", ".join(cfg["learning"])}.\n\n{repos_txt}\n\n</details>\n')
+    about = open(f"{ROOT}/about.md", encoding="utf-8").read().strip()  # long-form profile, edit freely
+    L.append(f'<details>\n<summary><b>More about me</b>: what I build, full stack, project details</summary>\n\n{about}\n\n</details>\n')
     # cache-bust: version each card URL by its content hash so GitHub's image cache refreshes when a card changes
     import hashlib, re
     ver = lambda m: f'./cards/{m[1]}.svg?v={hashlib.sha1(open(f"{ROOT}/cards/{m[1]}.svg", "rb").read()).hexdigest()[:8]}'
     open(f"{ROOT}/README.md", "w", encoding="utf-8").write(re.sub(r"\./cards/([\w-]+)\.svg", ver, "\n".join(L)))
 
 if __name__ == "__main__":
-    hero(); graph(); activity(); tiles(); repos(); stack(); chips(); footer(); readme()
+    hero(); graph(); activity(); tiles(); projects(); stack(); chips(); footer(); readme()
