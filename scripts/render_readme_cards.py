@@ -100,27 +100,10 @@ mtot = [sum(c for d, c in days if (d.year, d.month) == k) for k in months]
 
 # ---------- HERO ----------
 def hero():
-    W, H = 900, 336
+    W, H = 900, 320; cx = W / 2
     first, rest = (cfg["name"].split(" ", 1) + [""])[:2]
-    # sensor waveform panel (voltage + current), drawn in on load
-    px, py, pw, ph = 574, 48, 278, 240; cy = py + ph / 2 + 6
-    def wave(amp, ph0, yo=0):
-        pts = [(px + 18 + i * 2, cy + yo - amp * math.sin((i * 2) / 38 + ph0)) for i in range(int((pw - 36) / 2) + 1)]
-        return "M" + " L".join(f"{x:.1f} {y:.1f}" for x, y in pts)
-    grid = "".join(f'<line x1="{px+14}" x2="{px+pw-14}" y1="{y}" y2="{y}" stroke="{EDGE}" stroke-dasharray="2 5"/>' for y in (cy - 70, cy, cy + 70))
-    panel = f'<g class="fade" style="{D(.6)}"><rect x="{px}" y="{py}" width="{pw}" height="{ph}" rx="16" fill="{WHITE}" stroke="{EDGE}"/>{grid}' \
-            f'<path class="draw" pathLength="1" style="{D(.9)}" d="{wave(54, 0)}" fill="none" stroke="{VIOLET}" stroke-width="3" stroke-linecap="round"/>' \
-            f'<path class="draw" pathLength="1" style="{D(1.3)}" d="{wave(30, 1.1)}" fill="none" stroke="{CORAL}" stroke-width="3" stroke-linecap="round"/>' \
-            f'<circle cx="{px+24}" cy="{py+26}" r="4" fill="{VIOLET}"/><circle class="pulse" cx="{px+24}" cy="{py+26}" r="4" fill="none" stroke="{VIOLET}" stroke-width="2"/>' \
-            f'<text x="{px+38}" y="{py+30}" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">SIGNAL</text>' \
-            f'<circle cx="{px+pw-88}" cy="{py+ph-24}" r="4" fill="{VIOLET}"/><text x="{px+pw-78}" y="{py+ph-20}" font-size="11" class="mono" fill="{MUTE}">V</text>' \
-            f'<circle cx="{px+pw-52}" cy="{py+ph-24}" r="4" fill="{CORAL}"/><text x="{px+pw-42}" y="{py+ph-20}" font-size="11" class="mono" fill="{MUTE}">I</text></g>'
-    body = card(W, H) + \
-        f'<g class="rise" style="{D(.1)}"><rect x="48" y="50" width="9" height="9" rx="2" fill="{VIOLET}"/><text x="68" y="59" font-size="12" class="mono" fill="{MUTE}" letter-spacing="2">{esc(cfg["role"].upper())}</text></g>' \
-        f'<g class="rise" style="{D(.25)}"><text x="46" y="146" font-size="88" class="serif" fill="{INK}">{esc(first)}</text></g>' \
-        f'<g class="rise" style="{D(.45)}"><text x="46" y="228" font-size="88" class="serifi" fill="{VIOLET}">{esc(rest)}</text></g>' \
-        f'<g class="rise" style="{D(.75)}"><text x="48" y="272" font-size="19" class="sans" fill="{INK}" fill-opacity=".85">{esc(cfg["tagline"])}</text>' \
-        f'<text x="48" y="304" font-size="13" class="mono" fill="{INK}">{esc(cfg["link_text"])}</text>{ARROW(48+len(cfg["link_text"])*7.8+8, 294, 9, VIOLET)}</g>{panel}'
+    link = cfg["link_text"]; lw = len(link) * 7.8 + 8 + 9; lx = cx - lw / 2
+    body = card(W, H) +         f'<g class="rise" style="{D(.1)}"><text x="{cx}" y="64" text-anchor="middle" font-size="12" class="mono" fill="{MUTE}" letter-spacing="2.5">{esc(cfg["role"].upper())}</text></g>'         f'<g class="rise" style="{D(.3)}"><text x="{cx}" y="156" text-anchor="middle" font-size="80" class="serif" fill="{INK}">{esc(first)} <tspan class="serifi" fill="{VIOLET}">{esc(rest)}</tspan></text></g>'         f'<g class="fade" style="{D(.6)}"><rect x="{cx-24}" y="184" width="48" height="3" rx="1.5" fill="{VIOLET}"/></g>'         f'<g class="rise" style="{D(.75)}"><text x="{cx}" y="232" text-anchor="middle" font-size="19" class="sans" fill="{INK}" fill-opacity=".85">{esc(cfg["tagline"])}</text>'         f'<text x="{lx}" y="270" font-size="13" class="mono" fill="{INK}">{esc(link)}</text>{ARROW(lx + len(link)*7.8 + 8, 260, 9, VIOLET)}</g>'
     save("hero", svg(W, H, body, f"{cfg['name']} - GitHub profile", f"{cfg['name']}. {cfg['tagline']} {cfg['role']}.", ("serif", "serifi", "sans", "mono")))
 
 # ---------- CONTRIBUTION GRAPH ----------
