@@ -169,11 +169,15 @@ def activity(t0=3.0):
 def tiles(t0=4.2):
     W, H = 290, 230
     for i, t in enumerate(cfg["tiles"]):
-        val = int(prof[t["metric"]]); bgc, fg = t["bg"], t["fg"]; d0 = t0 + i * .22
+        bgc, fg = t["bg"], t["fg"]; d0 = t0 + i * .22
         N, dtf = 18, .045
-        mk = lambda k, cls, anim: f'<text class="{cls}" style="{anim}" x="24" y="122" font-size="64" fill="{fg}">'
-        frames = "".join(f'<text class="cn serif" style="animation-delay:{d0+.5+k*dtf:.3f}s;animation-duration:{dtf}s" x="24" y="122" font-size="64" fill="{fg}">{fmt(round(val*(1-(1-(k+1)/N)**3)))}</text>' for k in range(N - 1))
-        final = f'<text class="cn-last serif" style="animation-delay:{d0+.5+(N-1)*dtf:.3f}s" x="24" y="122" font-size="64" fill="{fg}">{fmt(val)}</text>'
+        if "value" in t:  # static text tile (no live metric, no count-up)
+            val = t["value"]; frames = ""
+            final = f'<text class="cn-last serif" style="animation-delay:{d0+.5:.3f}s" x="24" y="122" font-size="{t.get("size", 64)}" fill="{fg}">{esc(val)}</text>'
+        else:
+          val = int(prof[t["metric"]])
+          frames = "".join(f'<text class="cn serif" style="animation-delay:{d0+.5+k*dtf:.3f}s;animation-duration:{dtf}s" x="24" y="122" font-size="64" fill="{fg}">{fmt(round(val*(1-(1-(k+1)/N)**3)))}</text>' for k in range(N - 1))
+          final = f'<text class="cn-last serif" style="animation-delay:{d0+.5+(N-1)*dtf:.3f}s" x="24" y="122" font-size="64" fill="{fg}">{fmt(val)}</text>'
         desc = "".join(f'<text x="24" y="{176 + j*19}" font-size="13.5" class="sans" fill="{fg}" fill-opacity=".92">{esc(l)}</text>' for j, l in enumerate(wrap(t["text"], 34, 2)))
         body = f'<defs><clipPath id="c{i}"><rect width="{W}" height="{H}" rx="18"/></clipPath><linearGradient id="s{i}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".28"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>' \
                f'<g class="tile" style="{D(d0)}"><g clip-path="url(#c{i})"><rect width="{W}" height="{H}" fill="{bgc}"/>' \
@@ -239,7 +243,7 @@ def readme():
     L.append(a(f"https://github.com/{u}", "hero", f'{cfg["name"]}. {cfg["tagline"]} {cfg["role"]}.', 'width="100%"'))
     L.append('<img src="./cards/graph.svg" alt="Contribution graph for the last year" width="100%">')
     L.append('<img src="./cards/activity.svg" alt="Contributions per month, with current and longest streak" width="100%">')
-    for i, t in enumerate(cfg["tiles"]): L.append(a(t["url"], f"tile{i+1}", f'{t["label"]}: {t["unit"]}. {t["text"]}', 'width="32.5%"'))
+    for i, t in enumerate(cfg["tiles"]): L.append(a(t["url"], f"tile{i+1}", f'{t["label"]}: {t.get("value", "")} {t["unit"]}. {t["text"]}', 'width="32.5%"'))
     L.append('<img src="./cards/heading.svg" alt="What I am building" width="100%">')
     for i, r in enumerate(prof["featured"][:3]): L.append(a(r["url"], f"repo{i+1}", f'Repository {r["name"]}: {r["description"]}', 'width="32.5%"'))
     L.append('<img src="./cards/stack.svg" alt="Focus areas and what I am learning now" width="100%">')

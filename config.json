@@ -38,11 +38,11 @@
   ],
   "tiles": [
     {
-      "label": "BUILD",
-      "metric": "repos",
-      "unit": "repos",
-      "text": "AI products, FastAPI backends and ESP32 systems.",
-      "url": "https://github.com/rohit-anish?tab=repositories",
+      "label": "BUILDING",
+      "value": "Jatayu",
+      "unit": "Studios",
+      "text": "A creative agency. Visit jatayustudios.in",
+      "url": "https://jatayustudios.in",
       "bg": "#5b2cf0",
       "fg": "#ffffff"
     },
