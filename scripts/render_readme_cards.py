@@ -88,8 +88,11 @@ def streaks():
 cur_streak, best_streak = streaks()
 active = sum(1 for _, c in days if c > 0)
 busy_d, busy_c = max(days, key=lambda x: x[1])
-months = []
-for i in range(11, -1, -1):
+YEAR = cal.get("year")
+PERIOD = f"in {YEAR}" if YEAR else "in the last year"
+elapsed = sum(1 for d, _ in days if d <= today)
+months = [(YEAR, m) for m in range(1, 13)] if YEAR else []
+for i in (range(11, -1, -1) if not YEAR else ()):
     mm, yy = today.month - i, today.year
     while mm <= 0: mm += 12; yy -= 1
     months.append((yy, mm))
@@ -140,7 +143,7 @@ def graph(t0=1.8):
         f'<text x="858" y="56" text-anchor="end" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">REFRESHED DAILY</text></g>' \
         f'<g class="fade" style="{D(t0+.3)}">{"".join(labels)}</g>{"".join(cells)}' \
         f'<g class="fade" style="{D(t0+1.4)}"><text x="{lx-8}" y="{H-26}" text-anchor="end" font-size="10" class="mono" fill="{MUTE}">less</text>{leg}<text x="{lx+5*17+4}" y="{H-26}" font-size="10" class="mono" fill="{MUTE}">more</text></g>'
-    save("graph", svg(W, H, body, "Contribution graph", f"{fmt(total)} contributions in the last year.", ("serif", "serifi", "mono")))
+    save("graph", svg(W, H, body, "Contribution graph", f"{fmt(total)} contributions {PERIOD}.", ("serif", "serifi", "mono")))
 
 # ---------- ACTIVITY ----------
 def activity(t0=3.0):
@@ -152,7 +155,7 @@ def activity(t0=3.0):
                 f'<text x="{x+bw/2}" y="{base+20}" text-anchor="middle" font-size="10" class="mono" fill="{MUTE}">{dt.date(yy,mm,1):%b}</text>'
         if best: bars += f'<text class="pop mono" style="{D(t0+1.2)}" x="{x+bw/2}" y="{base-h-9:.1f}" text-anchor="middle" font-size="11" fill="{VIOLET}">{fmt(v)}</text>'
     rows = [(f"{cur_streak}", f" / {best_streak}", "days: current streak, and the longest"),
-            (f"{active}", f" / {len(days)}", "days with a commit"),
+            (f"{active}", f" / {elapsed}", "days with a commit"),
             (f"{busy_c}", "", f"contributions on the busiest day, {busy_d:%b} {busy_d.day}")]
     st = ""
     for i, (a, b, cap) in enumerate(rows):
@@ -161,7 +164,7 @@ def activity(t0=3.0):
               f'<text x="590" y="{y+22}" font-size="12.5" class="sans" fill="{MUTE}">{esc(cap)}</text>' + \
               (f'<line x1="590" x2="858" y1="{y+40}" y2="{y+40}" stroke="{EDGE}"/>' if i < 2 else "") + '</g>'
     body = card(W, H) + \
-        f'<g class="rise" style="{D(t0)}"><text x="42" y="54" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">THE LAST 12 MONTHS ON GITHUB</text>' \
+        f'<g class="rise" style="{D(t0)}"><text x="42" y="54" font-size="11" class="mono" fill="{MUTE}" letter-spacing="1.5">{f"{YEAR} ON GITHUB" if YEAR else "THE LAST 12 MONTHS ON GITHUB"}</text>' \
         f'<text x="42" y="104" font-size="48" class="serif" fill="{INK}">{fmt(total)} <tspan class="serifi">contributions</tspan></text></g>{bars}{st}'
     save("activity", svg(W, H, body, "Monthly contributions", f"{fmt(total)} contributions. Best month {dt.date(*months[bi],1):%B %Y}. Current streak {cur_streak} days.", ("serif", "serifi", "sans", "mono")))
 

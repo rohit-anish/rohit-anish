@@ -3,7 +3,7 @@ No token required. Contributions are read from the public contribution calendar
 (the same one shown on your profile, including private contributions if you enabled
 that setting). Repo/follower stats come from the REST API; GITHUB_TOKEN is optional
 and only raises the rate limit. If anything fails, the previous JSON files are kept."""
-import json, os, re, sys, urllib.request
+import datetime, json, os, re, sys, urllib.request
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 cfg = json.load(open(os.path.join(ROOT, "config.json")))
 USER = cfg["username"]
@@ -19,7 +19,11 @@ def get(url, api=True):
     return json.loads(body) if api else body
 
 def contributions():
-    html = get(f"https://github.com/users/{USER}/contributions", api=False)
+    # "contribution_year": "current" (default) -> Jan-Dec of this year, like GitHub's year tab; "rolling" -> last 12 months
+    mode = str(cfg.get("contribution_year", "current"))
+    year = None if mode == "rolling" else (datetime.date.today().year if mode == "current" else int(mode))
+    q = f"?from={year}-01-01&to={year}-12-31" if year else ""
+    html = get(f"https://github.com/users/{USER}/contributions{q}", api=False)
     dates = dict(re.findall(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?id="([^"]+)"', html))
     dates = {cid: d for d, cid in dates.items()}
     counts = {}
@@ -29,7 +33,7 @@ def contributions():
             counts[dates[cid]] = int(m.group(1).replace(",", "")) if m else 0
     if len(counts) < 300: raise RuntimeError(f"calendar parse failed ({len(counts)} days)")
     days = [{"date": d, "count": counts[d]} for d in sorted(counts)]
-    return {"sample": False, "total": sum(x["count"] for x in days), "days": days}
+    return {"sample": False, "year": year, "total": sum(x["count"] for x in days), "days": days}
 
 def card(r):
     lang = r.get("language") or ""
