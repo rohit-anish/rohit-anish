@@ -3,6 +3,11 @@ on:
   schedule:
     - cron: "30 1 * * *"   # daily, 07:00 IST
   workflow_dispatch:
+    inputs:
+      force:
+        description: "Accept GitHub's counts even if lower than saved ones"
+        type: boolean
+        default: false
   push:
     paths: ["config.json", "scripts/**", "fonts/**"]
 permissions:
@@ -17,6 +22,7 @@ jobs:
       - name: Fetch contribution + repo data
         env:
           GITHUB_TOKEN: ${{ secrets.GH_STATS_TOKEN || secrets.GITHUB_TOKEN }}
+          FORCE: ${{ inputs.force && '1' || '0' }}
         run: python scripts/fetch_data.py
       - name: Render README cards (hero, graph, activity, tiles, repos)
         run: python scripts/render_readme_cards.py

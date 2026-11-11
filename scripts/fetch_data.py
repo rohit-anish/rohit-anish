@@ -3,14 +3,14 @@ No token required. Contributions are read from the public contribution calendar
 (the same one shown on your profile, including private contributions if you enabled
 that setting). Repo/follower stats come from the REST API; GITHUB_TOKEN is optional
 and only raises the rate limit. If anything fails, the previous JSON files are kept."""
-import datetime, json, os, re, sys, urllib.request
+import datetime, json, os, re, sys, time, urllib.request
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 cfg = json.load(open(os.path.join(ROOT, "config.json"), encoding="utf-8"))
 USER = cfg["username"]
 TOK = os.environ.get("GITHUB_TOKEN")
 
 def get(url, api=True):
-    h = {"User-Agent": "profile-cards"}
+    h = {"User-Agent": "profile-cards", "Cache-Control": "no-cache", "Pragma": "no-cache"}
     if api:
         h["Accept"] = "application/vnd.github+json"
         if TOK: h["Authorization"] = f"Bearer {TOK}"
@@ -18,20 +18,44 @@ def get(url, api=True):
         body = r.read().decode()
     return json.loads(body) if api else body
 
+def scrape(url):
+    html = get(url, api=False)
+    ids = {cid: d for d, cid in re.findall(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?id="([^"]+)"', html)}
+    counts = {}
+    for cid, text in re.findall(r'<tool-tip[^>]*?for="([^"]+)"[^>]*>([^<]*)</tool-tip>', html):
+        if cid in ids:
+            m = re.match(r"(\d[\d,]*) contribution", text)
+            counts[ids[cid]] = int(m.group(1).replace(",", "")) if m else 0
+    return counts
+
 def contributions():
     # "contribution_year": "current" (default) -> Jan-Dec of this year, like GitHub's year tab; "rolling" -> last 12 months
     mode = str(cfg.get("contribution_year", "current"))
     year = None if mode == "rolling" else (datetime.date.today().year if mode == "current" else int(mode))
     q = f"?from={year}-01-01&to={year}-12-31" if year else ""
-    html = get(f"https://github.com/users/{USER}/contributions{q}", api=False)
-    dates = dict(re.findall(r'data-date="(\d{4}-\d{2}-\d{2})"[^>]*?id="([^"]+)"', html))
-    dates = {cid: d for d, cid in dates.items()}
+    # GitHub sometimes serves a stale (lower) calendar, so read it a few times and keep the highest count per day.
     counts = {}
-    for cid, text in re.findall(r'<tool-tip[^>]*?for="([^"]+)"[^>]*>([^<]*)</tool-tip>', html):
-        if cid in dates:
-            m = re.match(r"(\d[\d,]*) contribution", text)
-            counts[dates[cid]] = int(m.group(1).replace(",", "")) if m else 0
+    for attempt in range(3):
+        try:
+            for d, c in scrape(f"https://github.com/users/{USER}/contributions{q}&_={attempt}" if q else
+                               f"https://github.com/users/{USER}/contributions?_={attempt}").items():
+                counts[d] = max(c, counts.get(d, 0))
+        except Exception as e:
+            print(f"calendar attempt {attempt + 1} failed: {e}")
+        if attempt < 2: time.sleep(3)
     if len(counts) < 300: raise RuntimeError(f"calendar parse failed ({len(counts)} days)")
+    # Counts for a past day only go up, so never lower a day we already recorded for the same year.
+    # Set FORCE=1 to accept GitHub's numbers as-is (e.g. after hiding private contributions).
+    if year and os.environ.get("FORCE") != "1":
+        try:
+            prev = json.load(open(os.path.join(ROOT, "data/contributions.json"), encoding="utf-8"))
+            if prev.get("year") == year and not prev.get("sample"):
+                for x in prev["days"]:
+                    if x["date"] in counts and x["count"] > counts[x["date"]]:
+                        print(f"keeping {x['date']}={x['count']} (GitHub returned {counts[x['date']]})")
+                        counts[x["date"]] = x["count"]
+        except FileNotFoundError:
+            pass
     days = [{"date": d, "count": counts[d]} for d in sorted(counts)]
     return {"sample": False, "year": year, "total": sum(x["count"] for x in days), "days": days}
 
