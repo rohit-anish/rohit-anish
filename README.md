@@ -11,7 +11,7 @@
 <a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=8bcf1c4b" alt="LinkedIn" height="40"></a>
 <a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=2b3ccadd" alt="Email" height="40"></a>
 
-<img src="./cards/footer.svg?v=fb84fdcc" alt="Cards refreshed daily by a GitHub Action" width="100%">
+<img src="./cards/footer.svg?v=929b23bf" alt="Cards refreshed daily by a GitHub Action" width="100%">
 
 </div>
 
