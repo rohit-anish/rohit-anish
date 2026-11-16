@@ -23,13 +23,13 @@
    "color": "#8b95b3"
   },
   {
-   "name": "ASR-Perfector",
-   "description": "",
+   "name": "medpredict",
+   "description": "AI-powered web application for analyzing vital signs such as heart rate, SpO\u2082, blood pressure, temperature, and ECG data to predict potential health risks using machine learning. Built with a modern React frontend and FastAPI backend.",
    "stars": 0,
    "forks": 0,
-   "url": "https://github.com/rohit-anish/ASR-Perfector",
-   "language": "Python",
-   "color": "#3572A5"
+   "url": "https://github.com/rohit-anish/medpredict",
+   "language": "JavaScript",
+   "color": "#f1e05a"
   }
  ]
 }
