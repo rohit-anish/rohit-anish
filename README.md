@@ -1,8 +1,8 @@
 <div align="center">
 
 <a href="https://github.com/rohit-anish"><img src="./cards/hero.svg?v=7ef9cd04" alt="Rohit Anish P. Building AI-powered software and hardware. B.Tech CSE · AI/ML, backend &amp; IoT." width="100%"></a>
-<img src="./cards/graph.svg?v=0f457170" alt="Contribution graph for the last year" width="100%">
-<img src="./cards/activity.svg?v=dd653569" alt="Contributions per month, with current and longest streak" width="100%">
+<img src="./cards/graph.svg?v=dd97b4b3" alt="Contribution graph for the last year" width="100%">
+<img src="./cards/activity.svg?v=85ae4aa8" alt="Contributions per month, with current and longest streak" width="100%">
 <a href="https://jatayustudio.in"><img src="./cards/tile1.svg?v=97c57fd9" alt="BUILDING: Jatayu Studios. Creative agency · jatayustudio.in" width="33.33%"></a><a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/tile2.svg?v=5d5accf8" alt="RESEARCH: 9.78% WER. ASR across English accents" width="33.33%"></a><a href="https://pypi.org/project/onboardai/"><img src="./cards/tile3.svg?v=ac393cb5" alt="SHIPPED: OnboardAI on PyPI. Try it: pip install onboardai" width="33.33%"></a>
 <a href="https://github.com/rohit-anish/onboardAI"><img src="./cards/project1.svg?v=49c7dbbb" alt="OnboardAI: AI-powered developer onboarding for unfamiliar codebases, through Claude Code and MCP." width="50%"></a><a href="https://github.com/rohit-anish/Pragati"><img src="./cards/project2.svg?v=5521b4fd" alt="Pragati: AI textbook tutor for Tamil and Tanglish learners, grounded in the uploaded source." width="50%"></a>
 <a href="https://github.com/rohit-anish/ASR-Perfector"><img src="./cards/project3.svg?v=d4284f2f" alt="ASR-Perfector: Research on making speech recognition robust across English accents, noise and speaking styles." width="50%"></a><a href="https://github.com/rohit-anish/medpredict"><img src="./cards/project4.svg?v=202d7b90" alt="MedPredict: Predicts health risks from vitals like heart rate, SpO2, blood pressure and ECG." width="50%"></a>
@@ -11,7 +11,7 @@
 <a href="https://www.linkedin.com/in/rohitanishp/"><img src="./cards/chip1.svg?v=8bcf1c4b" alt="LinkedIn" height="40"></a>
 <a href="mailto:rohitanishp@gmail.com"><img src="./cards/chip2.svg?v=2b3ccadd" alt="Email" height="40"></a>
 
-<img src="./cards/footer.svg?v=09348559" alt="Cards refreshed daily by a GitHub Action" width="100%">
+<img src="./cards/footer.svg?v=583833a9" alt="Cards refreshed daily by a GitHub Action" width="100%">
 
 </div>
 
